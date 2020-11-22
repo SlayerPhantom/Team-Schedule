@@ -6,7 +6,7 @@ import buildURL from '../utils/buildURL';
 import background from '../images/bgimg.jpg';
 import user from '../images/user.jpg';
 
-function Forgot() {
+function Forgot(props) {
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [message, setMessage] = useState('');
@@ -14,7 +14,7 @@ function Forgot() {
 		try {
 			const payload = { password, confirmPassword };
 			const url = buildURL(
-				`api/miscellaneous/resetpassword/${this.props.match.params.token}`
+				`api/miscellaneous/resetpassword/${props.match.params.token}`
 			);
 			const res = await axios.post(url, payload);
 			if (res.data.errors) {
