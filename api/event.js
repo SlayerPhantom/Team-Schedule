@@ -16,8 +16,12 @@ router.post('/add', auth, async (req, res) => {
 		});
 		const event = await newEvent.save();
 		const user = await User.findById(req.user.id);
-		user.events.push({ id: event.id, name: event.name });
-		return res.json(event);
+		user.events.push({ id: event._id, name: event.name });
+		await user.save();
+		return res.json({
+			message: `${user.username} successfully created Event: ${event.name}`,
+			id: event._id,
+		});
 	} catch (error) {
 		console.error(error);
 		return res.json({ errors: error });
@@ -54,7 +58,7 @@ router.delete('/remove', auth, async (req, res) => {
 // authentication required
 router.post('/edit', auth, async (req, res) => {
 	try {
-		const { name, start, end } = req.body;
+		const { name, start, end, id } = req.body;
 		const event = await Event.findById(req.body.id);
 		if (event.creator !== req.user.username)
 			return res.json({ errors: 'you cannot edit this event' });
@@ -98,10 +102,10 @@ router.post('/adduser', async (req, res) => {
 router.delete('/removeuser', auth, async (req, res) => {
 	try {
 		const { id, userid } = req.body;
-		const user = await User.findById(req.user.id);
+		const user = await User.findById(userid);
 		if (!user) return res.json({ errors: 'user does not exist' });
 
-		const event = Event.findById(id);
+		const event = await Event.findById(id);
 		if (!event) return res.json({ errors: 'event does not exist' });
 		event.members = event.members.filter((member) => member.id !== userid);
 		await event.save();
