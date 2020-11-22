@@ -71,7 +71,7 @@ router.post('/edit', auth, async (req, res) => {
 
 router.post('/adduser', async (req, res) => {
 	try {
-		const { id, userid, username };
+		const { id, userid, username } = req.body;
 
 		const event = await Event.findById(req.body.id);
 		if (!event) return res.json({ errors: 'event does not exist' });
