@@ -172,7 +172,7 @@ function Register() {
 					>
 						<Link to={'/'}>Already have an account?</Link>
 					</div>
-					<p style={{ textAlign: 'center' }}>{message}</p>
+					<p style={{ textAlign: 'center', marginBottom: '10px' }}>{message}</p>
 				</Form>
 			</div>
 		</div>

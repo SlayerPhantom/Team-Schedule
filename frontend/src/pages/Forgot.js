@@ -1,29 +1,25 @@
 import React, { useState } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import axios from 'axios';
 import buildURL from '../utils/buildURL';
 import background from '../images/bgimg.jpg';
 import user from '../images/user.jpg';
 
-function Login() {
-	const [username, setUsername] = useState('');
+function Forgot() {
 	const [password, setPassword] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState('');
 	const [message, setMessage] = useState('');
-	async function login() {
+	async function resetPassword() {
 		try {
-			const payload = { username, password };
-			const url = buildURL('api/login');
+			const payload = { password, confirmPassword };
+			const url = buildURL(`api/miscellaneous/forgotpassword`);
 			const res = await axios.post(url, payload);
 			if (res.data.errors) {
 				setMessage(res.data.errors);
 				console.log(res.data.errors);
 				return;
 			}
-			const { token } = res.data;
-			localStorage.setItem('token', token);
-			localStorage.setItem('username', username);
-			window.location.replace('/home');
 		} catch (error) {
 			console.log(error);
 		}
@@ -41,7 +37,7 @@ function Login() {
 		>
 			<img
 				src={background}
-				alt="background image"
+				alt="background"
 				style={{
 					width: '100%',
 					height: '100%',
@@ -71,20 +67,10 @@ function Login() {
 						marginTop: '10px',
 					}}
 				/>
-				<h1 style={{ textAlign: 'center' }}>Login</h1>
+				<h1 style={{ textAlign: 'center' }}>Reset Password</h1>
 				<Form>
 					<FormGroup style={{ margin: '20px' }}>
-						<Label for="username">Username</Label>
-						<Input
-							type="text"
-							name="username"
-							placeholder="username"
-							value={username}
-							onChange={(e) => setUsername(e.target.value)}
-						/>
-					</FormGroup>
-					<FormGroup style={{ margin: '20px' }}>
-						<Label for="examplePassword">Password</Label>
+						<Label for="password">Password</Label>
 						<Input
 							type="password"
 							name="password"
@@ -93,9 +79,19 @@ function Login() {
 							onChange={(e) => setPassword(e.target.value)}
 						/>
 					</FormGroup>
+					<FormGroup style={{ margin: '20px' }}>
+						<Label for="examplePassword">Confirm Password</Label>
+						<Input
+							type="password"
+							name="confirm password"
+							placeholder="confirm password"
+							value={confirmPassword}
+							onChange={(e) => setConfirmPassword(e.target.value)}
+						/>
+					</FormGroup>
 					<div style={{ display: 'flex', justifyContent: 'center' }}>
-						<Button type="button" color="primary" onClick={login}>
-							Login
+						<Button type="button" color="primary" onClick={resetPassword}>
+							Reset Password
 						</Button>
 					</div>
 					<div
@@ -105,8 +101,7 @@ function Login() {
 							justifyContent: 'space-between',
 						}}
 					>
-						<Link to="/register">Don't have an account?</Link>
-						<Link to="/forgotpassword">Forgot password?</Link>
+						<Link to="/">Go to login</Link>
 					</div>
 				</Form>
 				<p style={{ textAlign: 'center', marginBottom: '10px' }}>{message}</p>
@@ -115,4 +110,4 @@ function Login() {
 	);
 }
 
-export default Login;
+export default Forgot;
