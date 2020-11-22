@@ -3,6 +3,7 @@ const User = require('../models/User');
 const router = require('express').Router();
 const auth = require('../utils/auth');
 
+// authentication required
 router.post('/add', auth, async (req, res) => {
 	try {
 		const { name, start, end } = req.body;
@@ -23,7 +24,8 @@ router.post('/add', auth, async (req, res) => {
 	}
 });
 
-router.delete('/delete', auth, async (req, res) => {
+// authentication required
+router.delete('/remove', auth, async (req, res) => {
 	try {
 		const { id } = req.body;
 		const event = await Event.findById(id);
@@ -49,6 +51,7 @@ router.delete('/delete', auth, async (req, res) => {
 	}
 });
 
+// authentication required
 router.post('/edit', auth, async (req, res) => {
 	try {
 		const { name, start, end } = req.body;
@@ -60,6 +63,53 @@ router.post('/edit', auth, async (req, res) => {
 		event.end = end;
 		await event.save();
 		return res.json({ message: 'successfully updated event' });
+	} catch (error) {
+		console.error(error);
+		return res.json({ errors: error });
+	}
+});
+
+router.post('/adduser', async (req, res) => {
+	try {
+		const { id, userid, username };
+
+		const event = await Event.findById(req.body.id);
+		if (!event) return res.json({ errors: 'event does not exist' });
+
+		const user = await User.findById(req.body.userid);
+		if (!user) return res.json({ errors: 'user does not exist' });
+
+		event.members.push({ id: userid, username });
+		user.events.push({ id: id, name: event.name });
+
+		await user.save();
+		await event.save();
+
+		return res.json({
+			message: `successfully added user to Event: ${event.name}`,
+		});
+	} catch (error) {
+		console.error(error);
+		return res.json({ errors: error });
+	}
+});
+
+// authentication required
+router.delete('/removeuser', auth, async (req, res) => {
+	try {
+		const { id, userid } = req.body;
+		const user = await User.findById(req.user.id);
+		if (!user) return res.json({ errors: 'user does not exist' });
+
+		const event = Event.findById(id);
+		if (!event) return res.json({ errors: 'event does not exist' });
+		event.members = event.members.filter((member) => member.id !== userid);
+		await event.save();
+		user.events = user.events.filter((e) => e.id !== id);
+		await user.save();
+		return res.json({
+			message: `successfully removed user from Event: ${event.name}`,
+		});
 	} catch (error) {
 		console.error(error);
 		return res.json({ errors: error });
