@@ -24,7 +24,7 @@ function Register() {
 				lname,
 				email,
 			};
-			const url = buildURL('api/login');
+			const url = buildURL('api/register');
 			const res = await axios.post(url, payload);
 			if (res.data.errors) {
 				setMessage(res.data.errors);
