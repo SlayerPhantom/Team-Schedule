@@ -7,13 +7,13 @@ router.get('/confirmEmail/:token', async (req, res) => {
 		const token = req.params.token;
 		const decoded = jwt.verify(token, process.env.SECRET_KEY);
 		const user = await User.findById(decoded.id);
-		if (!user) return res.status(401).json('user is not valid');
+		if (!user) return res.json({ errors: 'user is not valid' });
 		user.isVerified = true;
 		await user.save();
-		return res.status(201).json('user is verified');
-	} catch (error) {
-		console.error(error);
-		return res.status(500).json('internal server error');
+		return res.json({ message: 'user is verified' });
+	} catch (errors) {
+		console.error(errors);
+		return res.json({ errors });
 	}
 });
 
