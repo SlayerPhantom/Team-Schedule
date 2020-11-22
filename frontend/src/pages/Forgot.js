@@ -5,6 +5,7 @@ import axios from 'axios';
 import buildURL from '../utils/buildURL';
 import background from '../images/bgimg.jpg';
 import user from '../images/user.jpg';
+import { set } from 'mongoose';
 
 function Forgot(props) {
 	const [password, setPassword] = useState('');
@@ -22,7 +23,9 @@ function Forgot(props) {
 				console.log(res.data.errors);
 				return;
 			}
+			setMessage(res.data.message);
 		} catch (error) {
+			setMessage('unable to reset password');
 			console.log(error);
 		}
 	}
