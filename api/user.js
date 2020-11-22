@@ -63,8 +63,9 @@ router.post('/login', async (req, res) => {
 router.post('/user/search', async (req, res) => {
 	try {
 		const { search } = req.body;
+		const regex = new RegExp(search, 'i');
 		const users = await User.find({
-			username: { $regex: search, options: 'i' },
+			username: { $regex: regex },
 		});
 		return res.json({ users });
 	} catch (error) {
