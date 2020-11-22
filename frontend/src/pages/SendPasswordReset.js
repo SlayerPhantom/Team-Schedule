@@ -12,7 +12,7 @@ function SendPasswordReset() {
 	async function sendEmail() {
 		try {
 			const payload = { email };
-			const url = buildURL(`api/miscellaneous/resetpassword`);
+			const url = buildURL(`api/miscellaneous/forgotpassword`);
 			const res = await axios.post(url, payload);
 			if (res.data.errors) {
 				setMessage(res.data.errors);

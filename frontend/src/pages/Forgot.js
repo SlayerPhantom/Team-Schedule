@@ -13,7 +13,9 @@ function Forgot() {
 	async function resetPassword() {
 		try {
 			const payload = { password, confirmPassword };
-			const url = buildURL(`api/miscellaneous/forgotpassword`);
+			const url = buildURL(
+				`api/miscellaneous/resetpassword/${this.props.match.params.token}`
+			);
 			const res = await axios.post(url, payload);
 			if (res.data.errors) {
 				setMessage(res.data.errors);
