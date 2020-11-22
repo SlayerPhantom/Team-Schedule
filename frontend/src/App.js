@@ -79,7 +79,7 @@ function App() {
 				/>
 				<input
 					type="password"
-					value={password}
+					value={confirmPassword}
 					onChange={(text) => setConfirmPassword(text.target.value)}
 					placeholder="confirm password"
 				/>
