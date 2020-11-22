@@ -29,6 +29,7 @@ router.post('/register', async (req, res) => {
 			email: email,
 			firstName: fname,
 			lastName: lname,
+			events: [],
 			isVerified: false,
 		});
 		const user = await newUser.save();
@@ -50,7 +51,7 @@ router.post('/login', async (req, res) => {
 			const match = await bcrypt.compare(password, user.password);
 			if (!match) return res.json({ errors: 'wrong credentials' });
 			const token = createLoginToken(user._id, user.username);
-			return res.json({ token });
+			return res.json({ token, events: user.events });
 		} else {
 			return res.json({ errors: 'no user with this username exists' });
 		}
