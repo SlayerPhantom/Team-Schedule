@@ -43,9 +43,8 @@ async function sendPasswordMail(email) {
 		const token = createVerificationToken(user._id);
 		let url;
 		if (process.env.NODE_ENV === 'production')
-			url = `https://scheduler9.herokuapp.com/resetpassword/:${token}`;
-		else
-			url = `http://localhost:5000/api/miscellaneous/resetpassword/:${token}`;
+			url = `https://scheduler9.herokuapp.com/resetpassword/${token}`;
+		else url = `http://localhost:5000/api/miscellaneous/resetpassword/${token}`;
 		await transporter.sendMail({
 			to: email,
 			from: '"Schedule App email" <cop4331g9fall2020@gmail.com>',
