@@ -49,7 +49,7 @@ router.post('/login', async (req, res) => {
 				return res.json({ errors: 'please confirm your email' });
 			const match = await bcrypt.compare(password, user.password);
 			if (!match) return res.json({ errors: 'wrong credentials' });
-			const token = createLoginToken(user._id, user.Username);
+			const token = createLoginToken(user._id, user.username);
 			return res.json({ token });
 		} else {
 			return res.json({ errors: 'no user with this username exists' });
