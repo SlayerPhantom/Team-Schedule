@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/api', require('./api/user'));
-
+app.use('/api/miscellaneous', require('./api/miscellaneous'));
 app.set('port', PORT);
 
 // For Heroku deployment
