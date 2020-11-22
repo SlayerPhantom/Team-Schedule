@@ -47,15 +47,12 @@ router.post('/login', async (req, res) => {
 		if (user) {
 			if (!user.isVerified)
 				return res.json({ errors: 'please confirm your email' });
-			const match = await bcrypt.compare(password, user.Password);
+			const match = await bcrypt.compare(password, user.password);
 			if (!match) return res.json({ errors: 'wrong credentials' });
 			const token = createLoginToken(user._id, user.Username);
-			const payload = {
-				token,
-			};
-			return res.json(payload);
+			return res.json({ token });
 		} else {
-			res.json({ errors: 'no user with this username exists' });
+			return res.json({ errors: 'no user with this username exists' });
 		}
 	} catch (error) {
 		console.error(error);

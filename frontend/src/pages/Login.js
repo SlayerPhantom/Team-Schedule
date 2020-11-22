@@ -18,6 +18,7 @@ function Login() {
 			if (res.data.errors) {
 				setMessage(res.data.errors);
 				console.log(res.data.errors);
+				return;
 			}
 			const { token } = res.data;
 			localStorage.setItem('token', token);
