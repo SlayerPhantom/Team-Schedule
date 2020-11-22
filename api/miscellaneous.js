@@ -11,7 +11,8 @@ router.get('/confirmEmail/:token', async (req, res) => {
 		if (!user) return res.json({ errors: 'user is not valid' });
 		user.isVerified = true;
 		await user.save();
-		return res.json({ message: 'user is verified' });
+		res.redirect('https://scheduler9.herokuapp.com/');
+		// return res.json({ message: 'user is verified' });
 	} catch (errors) {
 		console.error(errors);
 		return res.json({ errors });
