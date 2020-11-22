@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const router = require('express').Router();
-const sendVerificationMail = require('../utils/mail');
+const { sendVerificationMail } = require('../utils/mail');
 const { createLoginToken } = require('../utils/jwt');
 const auth = require('../utils/auth');
 

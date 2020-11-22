@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const { sendPasswordMail } = require('../utils/mail');
 const User = require('../models/User');
 
 router.get('/confirmEmail/:token', async (req, res) => {
@@ -12,7 +13,6 @@ router.get('/confirmEmail/:token', async (req, res) => {
 		user.isVerified = true;
 		await user.save();
 		res.redirect('https://scheduler9.herokuapp.com/');
-		// return res.json({ message: 'user is verified' });
 	} catch (errors) {
 		console.error(errors);
 		return res.json({ errors });
@@ -32,6 +32,18 @@ router.post('/resetpassword/:token', async (req, res) => {
 		await user.save();
 		return res.json({ message: 'successfully updated password' });
 	} catch (error) {
+		return res.json({ errors: error });
+	}
+});
+
+router.post('/forgotpassword', async (req, res) => {
+	try {
+		const { email } = req.body;
+		const error = await sendPasswordMail(email);
+		if (error) return res.json({ errors: error });
+		return res.json({ message: 'password reset email has been sent' });
+	} catch (error) {
+		console.error(error);
 		return res.json({ errors: error });
 	}
 });
