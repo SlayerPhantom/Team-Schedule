@@ -15,7 +15,7 @@ router.post('/add', auth, async (req, res) => {
 			creator: req.user.username,
 		});
 		const event = await newEvent.save();
-		const user = User.findById(req.user.id);
+		const user = await User.findById(req.user.id);
 		user.events.push({ id: event.id, name: event.name });
 		return res.json(event);
 	} catch (error) {
