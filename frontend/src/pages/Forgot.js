@@ -5,7 +5,6 @@ import axios from 'axios';
 import buildURL from '../utils/buildURL';
 import background from '../images/bgimg.jpg';
 import user from '../images/user.jpg';
-import { set } from 'mongoose';
 
 function Forgot(props) {
 	const [password, setPassword] = useState('');
