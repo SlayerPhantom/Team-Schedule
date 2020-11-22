@@ -31,7 +31,7 @@ async function sendVerificationMail(userEmail, id) {
 
 async function sendPasswordMail(email) {
 	try {
-		const user = await User.findOne(email);
+		const user = await User.findOne({ email });
 		if (!user) return 'user with this email does not exist';
 		const transporter = nodemailer.createTransport({
 			service: 'Gmail',
@@ -47,11 +47,12 @@ async function sendPasswordMail(email) {
 		else
 			url = `http://localhost:5000/api/miscellaneous/resetpassword/:${token}`;
 		await transporter.sendMail({
-			to: userEmail,
+			to: email,
 			from: '"Schedule App email" <cop4331g9fall2020@gmail.com>',
 			subject: 'Schedule App Reset Password Email',
 			html: `Click this link to be redirected to reset password <a href="${url}">${url}</a>`,
 		});
+		return '';
 	} catch (error) {
 		console.error(error);
 		return { errors: error };
