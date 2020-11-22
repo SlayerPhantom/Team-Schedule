@@ -159,7 +159,7 @@ function Register() {
 					</Row>
 
 					<div style={{ display: 'flex', justifyContent: 'center' }}>
-						<Button type="button" color="primary" onClick={{ register }}>
+						<Button type="button" color="primary" onClick={register}>
 							Register
 						</Button>
 					</div>
