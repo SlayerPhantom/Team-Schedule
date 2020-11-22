@@ -60,4 +60,17 @@ router.post('/login', async (req, res) => {
 	}
 });
 
+router.post('/user/search', async (req, res) => {
+	try {
+		const { search } = req.body;
+		const users = await User.find({
+			username: { $regex: search, options: 'i' },
+		});
+		return res.json({ users });
+	} catch (error) {
+		console.error(error);
+		return res.json({ errors: error });
+	}
+});
+
 module.exports = router;
