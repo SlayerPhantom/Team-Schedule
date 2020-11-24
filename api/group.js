@@ -24,6 +24,7 @@ router.post('/creategroup', auth, async (req, res) => {
 			saturday,
 			sunday,
 		});
+		await schedule.save();
 		const newgroup = new Group({
 			creator: req.user.username,
 			scheduleid: schedule._id,

@@ -38,7 +38,7 @@ function Home() {
 					alignItems: 'center',
 				}}
 			>
-				hello there
+				<div></div>
 			</div>
 		</div>
 	);
