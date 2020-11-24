@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
+const Schedule = require('../models/Schedule');
 const router = require('express').Router();
 const { sendVerificationMail } = require('../utils/mail');
 const { createLoginToken } = require('../utils/jwt');
@@ -21,7 +22,23 @@ router.post('/register', async (req, res) => {
 		const usernameExists = await User.findOne({ username });
 		if (usernameExists)
 			return res.json({ errors: 'username is already taken' });
-
+		const monday = [];
+		const tuesday = [];
+		const wednesday = [];
+		const thursday = [];
+		const friday = [];
+		const saturday = [];
+		const sunday = [];
+		const schedule = await new Schedule({
+			monday,
+			tuesday,
+			wednesday,
+			thursday,
+			friday,
+			saturday,
+			sunday,
+		});
+		await schedule.save();
 		password = await bcrypt.hash(password, 12);
 		const newUser = new User({
 			username: username,
@@ -30,6 +47,7 @@ router.post('/register', async (req, res) => {
 			firstName: fname,
 			lastName: lname,
 			events: [],
+			scheduleid: schedule._id,
 			isVerified: false,
 		});
 		const user = await newUser.save();
@@ -51,7 +69,7 @@ router.post('/login', async (req, res) => {
 			const match = await bcrypt.compare(password, user.password);
 			if (!match) return res.json({ errors: 'wrong credentials' });
 			const token = createLoginToken(user._id, user.username);
-			return res.json({ token, events: user.events });
+			return res.json({ token });
 		} else {
 			return res.json({ errors: 'no user with this username exists' });
 		}

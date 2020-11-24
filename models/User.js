@@ -6,8 +6,9 @@ const userSchema = new Schema({
 	email: String,
 	firstName: String,
 	lastName: String,
-	events: [{ id: String, name: String }],
+	groups: [{ id: String, name: String }],
 	isVerified: Boolean,
+	scheduleid: String,
 });
 
 const User = model('user', userSchema);
