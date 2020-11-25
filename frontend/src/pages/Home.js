@@ -11,7 +11,6 @@ import {
 	FormGroup,
 	Label,
 	Input,
-	FormText,
 } from 'reactstrap';
 
 import buildURL from '../utils/buildURL';
@@ -29,6 +28,13 @@ function Home() {
 		settoken(localStorage.getItem('token'));
 		setusername(localStorage.getItem('username'));
 	});
+
+	function logout() {
+		localStorage.removeItem('username');
+		localStorage.removeItem('token');
+		localStorage.removeItem('scheduleid');
+		window.location.replace('/');
+	}
 	function gotogroup(id) {
 		const url = buildURL(`group/${id}`);
 		window.location.replace(url);
@@ -78,6 +84,8 @@ function Home() {
 				width: '100%',
 				height: '100%',
 				display: 'flex',
+				backgroundColor: 'gray',
+				position: 'relative',
 			}}
 		>
 			<div
@@ -89,7 +97,7 @@ function Home() {
 					color: 'white',
 				}}
 			>
-				{/* <div
+				<div
 					style={{
 						display: 'flex',
 						justifyContent: 'space-around',
@@ -105,8 +113,8 @@ function Home() {
 						}}
 					>
 						Groups
-					</h1> */}
-				{/* <div style={{ marginTop: '25px' }}>
+					</h1>{' '}
+					<div style={{ marginTop: '25px' }}>
 						<Button color="primary" onClick={toggle}>
 							Add Group
 						</Button>
@@ -142,7 +150,7 @@ function Home() {
 							</ModalFooter>
 						</Modal>
 					</div>
-				</div> */}
+				</div>
 				{groups.map((group) => (
 					<div
 						key={group.id}
@@ -171,10 +179,105 @@ function Home() {
 					</div>
 				))}
 			</div>
-			<div style={{ backgroundColor: 'red' }}>
-				<h1 style={{ backgroundColor: 'red', textAlign: 'center' }}>
-					hello there
-				</h1>
+
+			<div
+				style={{
+					position: 'absolute',
+					height: '100%',
+					width: `calc(100% - 300px)`,
+					left: '300px',
+					backgroundColor: 'blue',
+				}}
+			>
+				<div
+					style={{
+						height: `calc(100% - 30px)`,
+						width: 'calc(100% - 10px)',
+					}}
+				>
+					<div
+						style={{
+							height: `calc(100% - 25px)`,
+							marginTop: '55px',
+							border: '1px solid black',
+						}}
+					>
+						<h1 style={{ textAlign: 'center' }}>{`${username}'s `} Schedule</h1>
+						<div style={{ height: '100%', width: '100%', display: 'flex' }}>
+							<div
+								style={{
+									flex: 1,
+									textAlign: 'center',
+									borderRight: '1px solid black',
+								}}
+							>
+								Sunday
+							</div>
+							<div
+								style={{
+									flex: 1,
+									textAlign: 'center',
+									borderRight: '1px solid black',
+								}}
+							>
+								Monday
+							</div>
+							<div
+								style={{
+									flex: 1,
+									textAlign: 'center',
+									borderRight: '1px solid black',
+								}}
+							>
+								Tuesday
+							</div>
+							<div
+								style={{
+									flex: 1,
+									textAlign: 'center',
+									borderRight: '1px solid black',
+								}}
+							>
+								Wednesday
+							</div>
+							<div
+								style={{
+									flex: 1,
+									textAlign: 'center',
+									borderRight: '1px solid black',
+								}}
+							>
+								Thursday
+							</div>
+							<div
+								style={{
+									flex: 1,
+									textAlign: 'center',
+									borderRight: '1px solid black',
+								}}
+							>
+								Friday
+							</div>
+							<div
+								style={{
+									flex: 1,
+									textAlign: 'center',
+									borderRight: '1px solid black',
+								}}
+							>
+								Saturday
+							</div>
+						</div>
+					</div>
+					<Button
+						color="secondary"
+						size="md"
+						onClick={logout}
+						style={{ position: 'absolute', right: '20px', top: '5px' }}
+					>
+						Logout
+					</Button>
+				</div>
 			</div>
 		</div>
 	);
