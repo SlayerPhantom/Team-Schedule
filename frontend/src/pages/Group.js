@@ -25,7 +25,7 @@ function Group(props) {
 	const [searchusername, setsearchusername] = useState('');
 	const [starttime, setstarttime] = useState('');
 	const [endtime, setendtime] = useState('');
-	const [groupid, setgroupid] = useState(props.match.params.token);
+	const [groupid, setgroupid] = useState(props.match.params.groupid);
 	const [groupname, setgroupname] = useState('group 1');
 	const [username, setusername] = useState('');
 	const [day, setday] = useState('');
@@ -150,7 +150,7 @@ function Group(props) {
 				end: endtime,
 				name: timename,
 				day,
-				id: scheduleid,
+				id: props.match.params.groupid,
 			};
 			const res = await axios.post(url, payload, { headers });
 			if (res.data.errors) {

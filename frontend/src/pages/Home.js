@@ -12,7 +12,7 @@ import {
 	Label,
 	Input,
 } from 'reactstrap';
-
+import home from '../images/home.jpg';
 import buildURL from '../utils/buildURL';
 import usergroups from '../utils/groups';
 import userschedule from '../utils/schedule';
@@ -25,13 +25,17 @@ function Home() {
 	const [starttime, setstarttime] = useState('');
 	const [endtime, setendtime] = useState('');
 	const [day, setday] = useState('');
+	const [chosenday, setchosenday] = useState('');
 	const [token, settoken] = useState('');
 	const [username, setusername] = useState('unravelphantom');
 	const [modal, setModal] = useState(false);
 	const [timemodal, settimeModal] = useState(false);
+	const [edittimemodal, setedittimeModal] = useState(false);
 	const [message, setMessage] = useState('');
+	const [mode, setmode] = useState('none');
 	const toggle = () => setModal(!modal);
 	const toggletime = () => settimeModal(!timemodal);
+	const toggletimeedit = () => setedittimeModal(!edittimemodal);
 
 	useEffect(() => {
 		settoken(localStorage.getItem('token'));
@@ -104,7 +108,13 @@ function Home() {
 			console.log(error);
 		}
 	}
+	async function edittime() {
+		console.log('editting time');
+	}
 
+	async function removetime() {
+		console.log('remove time');
+	}
 	async function addtime() {
 		try {
 			const url = buildURL('api/schedule/addtimeuser');
@@ -195,7 +205,6 @@ function Home() {
 				width: '100%',
 				height: '100%',
 				display: 'flex',
-				backgroundColor: 'gray',
 				position: 'relative',
 			}}
 		>
@@ -336,7 +345,7 @@ function Home() {
 							</h1>
 							<div style={{ marginTop: '10px' }}>
 								<Button color="primary" onClick={toggletime}>
-									Add time to Schedule
+									Add
 								</Button>
 								<Modal isOpen={timemodal} toggle={toggletime}>
 									<ModalHeader toggle={toggletime}>Add time</ModalHeader>
@@ -408,6 +417,87 @@ function Home() {
 										</Button>
 									</ModalFooter>
 								</Modal>
+								<Button color="success" onClick={() => setmode('edit')}>
+									Edit
+								</Button>
+								<Modal isOpen={edittimemodal} toggle={toggletimeedit}>
+									<ModalHeader toggle={toggletimeedit}>Edit time</ModalHeader>
+									<ModalBody>
+										<Form>
+											<FormGroup>
+												<Label for="name">name of time</Label>
+												<Input
+													type="text"
+													name="name of time"
+													id="timeName"
+													placeholder="name of time"
+													value={timename}
+													onChange={(e) => settimename(e.target.value)}
+												/>
+											</FormGroup>
+
+											<FormGroup>
+												<Label for="day of week">Select day of week</Label>
+												<Input
+													type="select"
+													name="select"
+													id="exampleSelect"
+													value={day}
+													onChange={(e) => setday(e.target.value)}
+												>
+													<option>Sunday</option>
+													<option>Monday</option>
+													<option>Tuesday</option>
+													<option>Wednesday</option>
+													<option>Thursday</option>
+													<option>Friday</option>
+													<option>Sunday</option>
+												</Input>
+											</FormGroup>
+											<FormGroup>
+												<Label for="start time">new start time</Label>
+												<Input
+													type="time"
+													name="start time"
+													id="startTime"
+													placeholder="start time placeholder"
+													onChange={(e) => setstarttime(e.target.value)}
+												/>
+											</FormGroup>
+											<FormGroup>
+												<Label for="exampleTime">new end time</Label>
+												<Input
+													type="time"
+													name="end time"
+													id="endTime"
+													onChange={(e) => setendtime(e.target.value)}
+													placeholder="end time placeholder"
+												/>
+											</FormGroup>
+										</Form>
+									</ModalBody>
+									<ModalFooter>
+										<Button
+											color="success"
+											onClick={() => {
+												edittime();
+											}}
+										>
+											edit
+										</Button>{' '}
+										<Button color="secondary" onClick={toggletimeedit}>
+											Cancel
+										</Button>
+									</ModalFooter>
+								</Modal>
+								<Button color="danger" onClick={() => setmode('delete')}>
+									delete
+								</Button>
+								{mode !== 'none' ? (
+									<Button color="secondary" onClick={() => setmode('none')}>
+										cancel
+									</Button>
+								) : null}
 							</div>
 						</div>
 						<div style={{ height: '100%', width: '100%', display: 'flex' }}>
@@ -421,11 +511,35 @@ function Home() {
 							>
 								<h6 style={{ textDecoration: 'underline' }}>Sunday</h6>
 								<div>
-									{schedule.sunday.map((day, index) => (
-										<p key={index}>
-											{day.name} : {day.start} - {day.end}
-										</p>
-									))}
+									{mode === 'edit'
+										? schedule.sunday.map((day) => (
+												<p
+													key={day.id}
+													onClick={toggletimeedit}
+													style={{ color: 'green', cursor: 'pointer' }}
+												>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
+									{mode === 'delete'
+										? schedule.sunday.map((day) => (
+												<p
+													key={day.id}
+													onClick={() => removetime(day.id)}
+													style={{ color: 'crimson', cursor: 'pointer' }}
+												>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
+									{mode === 'none'
+										? schedule.sunday.map((day) => (
+												<p key={day.id}>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
 								</div>
 							</div>
 							<div
@@ -438,11 +552,35 @@ function Home() {
 							>
 								<h6 style={{ textDecoration: 'underline' }}>Monday</h6>
 								<div>
-									{schedule.monday.map((day, index) => (
-										<p key={index}>
-											{day.name} : {day.start} - {day.end}
-										</p>
-									))}
+									{mode === 'edit'
+										? schedule.monday.map((day) => (
+												<p
+													key={day.id}
+													onClick={toggletimeedit}
+													style={{ color: 'green', cursor: 'pointer' }}
+												>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
+									{mode === 'delete'
+										? schedule.monday.map((day) => (
+												<p
+													key={day.id}
+													onClick={() => removetime(day.id)}
+													style={{ color: 'crimson', cursor: 'pointer' }}
+												>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
+									{mode === 'none'
+										? schedule.monday.map((day) => (
+												<p key={day.id}>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
 								</div>
 							</div>
 							<div
@@ -455,11 +593,35 @@ function Home() {
 							>
 								<h6 style={{ textDecoration: 'underline' }}>Tuesday</h6>
 								<div>
-									{schedule.tuesday.map((day, index) => (
-										<p key={index}>
-											{day.name} : {day.start} - {day.end}
-										</p>
-									))}
+									{mode === 'edit'
+										? schedule.tuesday.map((day) => (
+												<p
+													key={day.id}
+													onClick={toggletimeedit}
+													style={{ color: 'green', cursor: 'pointer' }}
+												>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
+									{mode === 'delete'
+										? schedule.tuesday.map((day) => (
+												<p
+													key={day.id}
+													onClick={() => removetime(day.id)}
+													style={{ color: 'crimson', cursor: 'pointer' }}
+												>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
+									{mode === 'none'
+										? schedule.tuesday.map((day) => (
+												<p key={day.id}>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
 								</div>
 							</div>
 							<div
@@ -472,11 +634,35 @@ function Home() {
 							>
 								<h6 style={{ textDecoration: 'underline' }}>Wednesday</h6>
 								<div>
-									{schedule.wednesday.map((day, index) => (
-										<p key={index}>
-											{day.name} : {day.start} - {day.end}
-										</p>
-									))}
+									{mode === 'edit'
+										? schedule.wednesday.map((day) => (
+												<p
+													key={day.id}
+													onClick={toggletimeedit}
+													style={{ color: 'green', cursor: 'pointer' }}
+												>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
+									{mode === 'delete'
+										? schedule.wednesday.map((day) => (
+												<p
+													key={day.id}
+													onClick={() => removetime(day.id)}
+													style={{ color: 'crimson', cursor: 'pointer' }}
+												>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
+									{mode === 'none'
+										? schedule.wednesday.map((day) => (
+												<p key={day.id}>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
 								</div>
 							</div>
 							<div
@@ -489,11 +675,35 @@ function Home() {
 							>
 								<h6 style={{ textDecoration: 'underline' }}>Thursday</h6>
 								<div>
-									{schedule.thursday.map((day, index) => (
-										<p key={index}>
-											{day.name} : {day.start} - {day.end}
-										</p>
-									))}
+									{mode === 'edit'
+										? schedule.thursday.map((day) => (
+												<p
+													key={day.id}
+													onClick={toggletimeedit}
+													style={{ color: 'green', cursor: 'pointer' }}
+												>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
+									{mode === 'delete'
+										? schedule.thursday.map((day) => (
+												<p
+													key={day.id}
+													onClick={() => removetime(day.id)}
+													style={{ color: 'crimson', cursor: 'pointer' }}
+												>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
+									{mode === 'none'
+										? schedule.thursday.map((day) => (
+												<p key={day.id}>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
 								</div>
 							</div>
 							<div
@@ -506,11 +716,35 @@ function Home() {
 							>
 								<h6 style={{ textDecoration: 'underline' }}>Friday</h6>
 								<div>
-									{schedule.friday.map((day, index) => (
-										<p key={index}>
-											{day.name} : {day.start} - {day.end}
-										</p>
-									))}
+									{mode === 'edit'
+										? schedule.friday.map((day) => (
+												<p
+													key={day.id}
+													onClick={toggletimeedit}
+													style={{ color: 'green', cursor: 'pointer' }}
+												>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
+									{mode === 'delete'
+										? schedule.friday.map((day) => (
+												<p
+													key={day.id}
+													onClick={() => removetime(day.id)}
+													style={{ color: 'crimson', cursor: 'pointer' }}
+												>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
+									{mode === 'none'
+										? schedule.friday.map((day) => (
+												<p key={day.id}>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
 								</div>
 							</div>
 							<div
@@ -523,11 +757,35 @@ function Home() {
 							>
 								<h6 style={{ textDecoration: 'underline' }}>Saturday</h6>
 								<div>
-									{schedule.saturday.map((day, index) => (
-										<p key={index}>
-											{day.name} : {day.start} - {day.end}
-										</p>
-									))}
+									{mode === 'edit'
+										? schedule.saturday.map((day) => (
+												<p
+													key={day.id}
+													onClick={toggletimeedit}
+													style={{ color: 'green', cursor: 'pointer' }}
+												>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
+									{mode === 'delete'
+										? schedule.saturday.map((day) => (
+												<p
+													key={day.id}
+													onClick={() => removetime(day.id)}
+													style={{ color: 'crimson', cursor: 'pointer' }}
+												>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
+									{mode === 'none'
+										? schedule.saturday.map((day) => (
+												<p key={day.id}>
+													{day.name} : {day.start} - {day.end}
+												</p>
+										  ))
+										: null}
 								</div>
 							</div>
 						</div>
