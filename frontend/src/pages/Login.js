@@ -17,12 +17,16 @@ function Login() {
 			const res = await axios.post(url, payload);
 			if (res.data.errors) {
 				setMessage(res.data.errors);
+				setTimeout(() => {
+					setMessage('');
+				}, 2000);
 				console.log(res.data.errors);
 				return;
 			}
-			const { token } = res.data;
+			const { token, scheduleid } = res.data;
 			localStorage.setItem('token', token);
 			localStorage.setItem('username', username);
+			localStorage.setItem('scheduleid', scheduleid);
 			window.location.replace('/home');
 		} catch (error) {
 			console.log(error);

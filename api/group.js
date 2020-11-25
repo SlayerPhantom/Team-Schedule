@@ -25,16 +25,23 @@ router.post('/creategroup', auth, async (req, res) => {
 			sunday,
 		});
 		await schedule.save();
+		const members = [{ id: req.user.id, username: req.user.username }];
 		const newgroup = new Group({
 			creator: req.user.username,
 			scheduleid: schedule._id,
-			members: [{ id: req.user.id, username: req.user.username }],
+			members,
+			name,
 		});
 		await newgroup.save();
 		const user = await User.findById(req.user.id);
 		user.groups.push({ id: newgroup._id, name });
 		await user.save();
-		return res.json({ id: newgroup._id });
+		return res.json({
+			id: newgroup._id,
+			scheduleid: schedule._id,
+			members,
+			message: 'successfully added group',
+		});
 	} catch (error) {
 		console.error(error);
 		return res.json({ errors: error });

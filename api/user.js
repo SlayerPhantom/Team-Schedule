@@ -55,7 +55,7 @@ router.post('/register', async (req, res) => {
 		return res.json({ message: 'Verify Email to Begin' });
 	} catch (error) {
 		console.error(error);
-		return res.json({ error: error });
+		return res.json({ errors: error });
 	}
 });
 
@@ -69,7 +69,7 @@ router.post('/login', async (req, res) => {
 			const match = await bcrypt.compare(password, user.password);
 			if (!match) return res.json({ errors: 'wrong credentials' });
 			const token = createLoginToken(user._id, user.username);
-			return res.json({ token });
+			return res.json({ token, scheduleid: user.scheduleid });
 		} else {
 			return res.json({ errors: 'no user with this username exists' });
 		}
