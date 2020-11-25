@@ -35,9 +35,43 @@ function Home() {
 
 	useEffect(() => {
 		settoken(localStorage.getItem('token'));
-		// setusername(localStorage.getItem('username'));
+		setusername(localStorage.getItem('username'));
 		setscheduleid(localStorage.getItem('scheduleid'));
-	});
+		const getuserschedule = async () => {
+			try {
+				const headers = { token };
+				const url = buildURL('api/schedule/getscheduleuser');
+				const res = await axios.get(url, { headers });
+				if (res.data.errors) {
+					const { errors } = res.data;
+					console.log(errors);
+					setMessage(errors);
+					return;
+				}
+				const {
+					monday,
+					tuesday,
+					wednesday,
+					thursday,
+					friday,
+					saturday,
+					sunday,
+				} = res.data;
+				setschedule({
+					monday,
+					tuesday,
+					wednesday,
+					thursday,
+					friday,
+					saturday,
+					sunday,
+				});
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		getuserschedule();
+	}, []);
 
 	function logout() {
 		localStorage.removeItem('username');
@@ -255,13 +289,15 @@ function Home() {
 						>
 							{group.name}
 						</h5>
-						<Button
-							color="danger"
-							size="sm"
-							onClick={() => removeGroup(group.id)}
-						>
-							<FaMinus color="white" size="2em" />
-						</Button>
+						{username === group.creator ? (
+							<Button
+								color="danger"
+								size="sm"
+								onClick={() => removeGroup(group.id)}
+							>
+								<FaMinus color="white" size="2em" />
+							</Button>
+						) : null}
 					</div>
 				))}
 			</div>

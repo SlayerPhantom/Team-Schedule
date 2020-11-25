@@ -36,6 +36,7 @@ router.post('/getschedulegroup', async (req, res) => {
 			friday: schedule.friday,
 			saturday: schedule.saturday,
 			sunday: schedule.sunday,
+			scheduleid: group.scheduleid,
 		});
 	} catch (error) {
 		console.error(error);

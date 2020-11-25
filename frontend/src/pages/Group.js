@@ -22,14 +22,14 @@ function Group(props) {
 	const [scheduleid, setscheduleid] = useState('');
 	const [timename, settimename] = useState('');
 	const [schedule, setschedule] = useState(userschedule);
-
+	const [searchusername, setsearchusername] = useState('');
 	const [starttime, setstarttime] = useState('');
 	const [endtime, setendtime] = useState('');
 	const [groupid, setgroupid] = useState(props.match.params.token);
 	const [groupname, setgroupname] = useState('group 1');
+	const [username, setusername] = useState('');
 	const [day, setday] = useState('');
 	const [token, settoken] = useState('');
-	const [username, setusername] = useState('');
 	const [modal, setModal] = useState(false);
 	const [timemodal, settimeModal] = useState(false);
 	const [message, setMessage] = useState('');
@@ -41,7 +41,44 @@ function Group(props) {
 		settoken(localStorage.getItem('token'));
 		setusername(localStorage.getItem('username'));
 		setscheduleid(localStorage.getItem('scheduleid'));
-	});
+		const getgroupschedule = async (id) => {
+			try {
+				const url = buildURL(`api/schedule/getschedulegroup`);
+				const payload = { id };
+				const res = await axios.post(url, payload);
+				if (res.data.errors) {
+					const { errors } = res.data;
+					console.log(errors);
+					setMessage(errors);
+					return;
+				}
+				const {
+					monday,
+					tuesday,
+					wednesday,
+					thursday,
+					friday,
+					saturday,
+					sunday,
+					scheduleid,
+				} = res.data;
+				setscheduleid(scheduleid);
+
+				setschedule({
+					monday,
+					tuesday,
+					wednesday,
+					thursday,
+					friday,
+					saturday,
+					sunday,
+				});
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		getgroupschedule(groupid);
+	}, []);
 
 	function onHover(e) {
 		e.target.style.color = 'red';
@@ -88,9 +125,20 @@ function Group(props) {
 	}
 
 	async function searchusers(search) {
-		const url = buildURL('api/user/search');
-		const payload = { search };
-		const res = await axios.post(url, payload);
+		try {
+			const url = buildURL('api/user/search');
+			const payload = { search };
+			const res = await axios.post(url, payload);
+			if (res.data.errors) {
+				const { errors } = res.data;
+				console.log(errors);
+				setMessage(errors);
+				return;
+			}
+			setsearchedusers(res.data.users);
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	async function addtime() {
@@ -187,6 +235,51 @@ function Group(props) {
 						>
 							<FaPlus />
 						</Button>
+					</div>
+					<div>
+						<Modal isOpen={modal} toggle={toggle}>
+							<ModalHeader toggle={toggle}>Search users</ModalHeader>
+							<ModalBody>
+								<Form>
+									<FormGroup>
+										<Label for="search username">Enter their username</Label>
+										<Input
+											type="text"
+											name="users"
+											id="users"
+											placeholder="search a username"
+											value={searchusername}
+											onChange={(e) => setsearchusername(e.target.value)}
+										/>
+									</FormGroup>
+								</Form>
+								{searchedusers.map((user) => (
+									<div key={user.id} style={{ display: 'flex' }}>
+										<p>{user.username}</p>
+										<Button onClick={() => adduser(user.id)}>add</Button>
+									</div>
+								))}
+							</ModalBody>
+							<ModalFooter>
+								<Button
+									color="primary"
+									onClick={() => {
+										searchusers(searchusername);
+									}}
+								>
+									search
+								</Button>{' '}
+								<Button
+									color="secondary"
+									onClick={() => {
+										setsearchedusers([]);
+										toggle();
+									}}
+								>
+									Cancel
+								</Button>
+							</ModalFooter>
+						</Modal>
 					</div>
 				</div>
 				{members.map((member) => (
