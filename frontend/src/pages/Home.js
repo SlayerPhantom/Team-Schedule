@@ -16,7 +16,6 @@ import buildURL from '../utils/buildURL';
 function Home() {
 	const [groups, setgroups] = useState([]);
 	const [loading, setloading] = useState(true);
-	const [scheduleid, setscheduleid] = useState('');
 	const [schedule, setschedule] = useState({
 		sunday: [],
 		monday: [],
@@ -32,8 +31,11 @@ function Home() {
 	const [endtime, setendtime] = useState('');
 	const [day, setday] = useState('');
 	const [timeid, settimeid] = useState('');
-	const [token, settoken] = useState('');
-	const [username, setusername] = useState('');
+	const [scheduleid, setscheduleid] = useState(
+		localStorage.getItem('scheduleid')
+	);
+	const [token, settoken] = useState(localStorage.getItem('token'));
+	const [username, setusername] = useState(localStorage.getItem('username'));
 	const [modal, setModal] = useState(false);
 	const [timemodal, settimeModal] = useState(false);
 	const [edittimemodal, setedittimeModal] = useState(false);
@@ -44,13 +46,10 @@ function Home() {
 	const toggletimeedit = () => setedittimeModal(!edittimemodal);
 
 	useEffect(() => {
-		settoken(localStorage.getItem('token'));
-		setusername(localStorage.getItem('username'));
-		setscheduleid(localStorage.getItem('scheduleid'));
 		const onload = async () => {
 			const getusergroups = async () => {
 				try {
-					const headers = { token };
+					const headers = { Authorization: token };
 					const url = buildURL('api/user/getgroups');
 					const res = await axios.get(url, { headers });
 					if (res.data.errors) {
@@ -67,7 +66,7 @@ function Home() {
 			};
 			const getuserschedule = async () => {
 				try {
-					const headers = { token };
+					const headers = { Authorization: token };
 					const url = buildURL('api/schedule/getscheduleuser');
 					const res = await axios.get(url, { headers });
 					if (res.data.errors) {
@@ -249,7 +248,7 @@ function Home() {
 		e.target.style.color = 'white';
 	}
 	return (
-		loading && (
+		!loading && (
 			<div
 				style={{
 					width: '100%',
@@ -457,13 +456,13 @@ function Home() {
 														value={day}
 														onChange={(e) => setday(e.target.value)}
 													>
-														<option>Sunday</option>
-														<option>Monday</option>
-														<option>Tuesday</option>
-														<option>Wednesday</option>
-														<option>Thursday</option>
-														<option>Friday</option>
-														<option>Sunday</option>
+														<option>sunday</option>
+														<option>monday</option>
+														<option>tuesday</option>
+														<option>wednesday</option>
+														<option>thursday</option>
+														<option>friday</option>
+														<option>saturday</option>
 													</Input>
 												</FormGroup>
 												<FormGroup>
