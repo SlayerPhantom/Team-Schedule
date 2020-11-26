@@ -138,6 +138,7 @@ function Home() {
 	async function edittime() {
 		try {
 			const url = buildURL('api/schedule/edituserschedule');
+			const headers = { Authorization: token };
 			const payload = {
 				start: starttime,
 				end: endtime,
@@ -146,7 +147,9 @@ function Home() {
 				timename,
 				id: scheduleid,
 			};
-			const res = await axios.post('api/schedule/edituserschedule', payload);
+			const res = await axios.post('api/schedule/edituserschedule', payload, {
+				headers,
+			});
 			if (res.data.errors) {
 				const { errors } = res.data;
 				console.log(errors);
@@ -156,6 +159,7 @@ function Home() {
 			const { schedule } = res.data;
 			setschedule(schedule);
 			setMessage('successfully edited message');
+			toggletimeedit();
 		} catch (error) {
 			console.log(error);
 		}
@@ -209,6 +213,7 @@ function Home() {
 					console.log('not a valid day');
 			}
 			setschedule(schedule);
+			toggletime();
 			setMessage(res.data.message);
 		} catch (error) {}
 	}
