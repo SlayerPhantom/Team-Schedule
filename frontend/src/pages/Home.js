@@ -11,6 +11,7 @@ import {
 	FormGroup,
 	Label,
 	Input,
+	Alert,
 } from 'reactstrap';
 import buildURL from '../utils/buildURL';
 function Home() {
@@ -286,14 +287,13 @@ function Home() {
 							Groups
 						</h3>{' '}
 						<div style={{ marginTop: '25px' }}>
-							<Button
-								color="primary"
+							<FaPlus
 								onClick={toggle}
-								style={{ paddingBottom: '5px' }}
-								size="sm"
-							>
-								<FaPlus />
-							</Button>
+								style={{
+									cursor: 'pointer',
+									color: 'blue',
+								}}
+							/>
 							<Modal isOpen={modal} toggle={toggle}>
 								<ModalHeader toggle={toggle}>Add group</ModalHeader>
 								<ModalBody>
@@ -351,15 +351,14 @@ function Home() {
 								{group.name}
 							</h5>
 							{username == group.creator ? (
-								<Button
-									color="danger"
-									size="sm"
+								<FaMinus
+									color="white"
+									size="2em"
 									onClick={() => {
 										setgroupid(group.id);
 									}}
-								>
-									<FaMinus color="white" size="2em" />
-								</Button>
+									style={{ cursor: 'pointer', color: 'red' }}
+								/>
 							) : null}
 						</div>
 					))}
@@ -398,54 +397,96 @@ function Home() {
 									{`${username}'s `} Schedule
 								</h1>
 								{timeid && mode === 'delete' && (
-									<div>
-										Are you sure you want to delete?
-										<br />
-										<Button
-											color="danger"
-											onClick={async () => {
-												try {
-													const url = buildURL('api/schedule/removetimeuser');
-													const payload = { day, timeid };
-													const headers = { Authorization: token };
-													const res = await axios.post(url, payload, {
-														headers,
-													});
-													if (res.data.errors) {
-														const { errors } = res.data;
-														console.log(errors);
-														setMessage(errors);
-														return;
-													}
-													settimeid('');
-													setschedule(res.data.schedule);
-													setMessage(res.data.message);
-												} catch (error) {
-													console.log(error);
-												}
-											}}
-										>
-											yes
-										</Button>
-										<Button color="secondary" onClick={() => settimeid('')}>
-											cancel
-										</Button>
+									<div
+										style={{
+											position: 'absolute',
+											height: '100%',
+											width: '100%',
+											display: 'grid',
+											placeItems: 'center',
+										}}
+									>
+										<Alert color="danger">
+											<p style={{ textAlign: 'center' }}>
+												Are you sure you want to delete this time?
+											</p>
+											<br />
+											<div
+												style={{ display: 'flex', justifyContent: 'center' }}
+											>
+												<Button
+													color="danger"
+													onClick={async () => {
+														try {
+															const url = buildURL(
+																'api/schedule/removetimeuser'
+															);
+															const payload = { day, timeid };
+															const headers = { Authorization: token };
+															const res = await axios.post(url, payload, {
+																headers,
+															});
+															if (res.data.errors) {
+																const { errors } = res.data;
+																console.log(errors);
+																setMessage(errors);
+																return;
+															}
+															settimeid('');
+															setschedule(res.data.schedule);
+															setMessage(res.data.message);
+														} catch (error) {
+															console.log(error);
+														}
+													}}
+												>
+													yes
+												</Button>
+												<Button color="secondary" onClick={() => settimeid('')}>
+													cancel
+												</Button>
+											</div>
+										</Alert>
 									</div>
 								)}
 								{groupid && (
-									<div>
-										Are you sure you want to delete?
-										<br />
-										<Button color="danger" onClick={() => removeGroup}>
-											yes
-										</Button>
-										<Button color="secondary" onClick={() => setgroupid('')}>
-											cancel
-										</Button>
+									<div
+										style={{
+											position: 'absolute',
+											height: '100%',
+											width: '100%',
+											display: 'grid',
+											placeItems: 'center',
+										}}
+									>
+										<Alert color="danger">
+											<p style={{ textAlign: 'center' }}>
+												Are you sure you want to delete this group?
+											</p>
+											<br />
+											<div
+												style={{ display: 'flex', justifyContent: 'center' }}
+											>
+												<Button
+													color="danger"
+													onClick={async () => removeGroup}
+												>
+													yes
+												</Button>
+												<Button
+													color="secondary"
+													onClick={() => setgroupid('')}
+												>
+													cancel
+												</Button>
+											</div>
+										</Alert>
 									</div>
 								)}
 
-								<div style={{ marginTop: '10px' }}>
+								<div
+									style={{ position: 'absolute', right: '80px', top: '50px' }}
+								>
 									<Button color="primary" onClick={toggletime}>
 										Add
 									</Button>

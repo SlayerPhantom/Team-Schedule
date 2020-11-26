@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import {
@@ -11,6 +12,7 @@ import {
 	FormGroup,
 	Label,
 	Input,
+	Alert,
 } from 'reactstrap';
 
 import buildURL from '../utils/buildURL';
@@ -56,7 +58,6 @@ function Group(props) {
 				try {
 					const url = buildURL(`api/schedule/getschedulegroup`);
 					const payload = { id: groupid };
-					console.log(payload);
 					const res = await axios.post(url, payload);
 					if (res.data.errors) {
 						const { errors } = res.data;
@@ -120,7 +121,7 @@ function Group(props) {
 		try {
 			const url = buildURL('api/group/removeuser');
 			const payload = { userid, id: groupid };
-			const res = await axios.delete(url, payload);
+			const res = await axios.post(url, payload);
 			if (res.data.errors) {
 				const { errors } = res.data;
 				console.log(errors);
@@ -128,6 +129,7 @@ function Group(props) {
 				return;
 			}
 			setmembers(members.filter((member) => member.id != userid));
+			setuserid('');
 			setMessage(res.data.message);
 		} catch (error) {
 			console.log(error);
@@ -157,7 +159,7 @@ function Group(props) {
 		try {
 			const url = buildURL('api/group/adduser');
 			const payload = { id: groupid, name, userid };
-			const res = axios.post(url, payload);
+			const res = await axios.post(url, payload);
 			if (res.data.errors) {
 				const { errors } = res.data;
 				console.log(errors);
@@ -217,7 +219,7 @@ function Group(props) {
 
 	async function edittime() {
 		try {
-			const url = buildURL('api/schedule/editgroupchedule');
+			const url = buildURL('api/schedule/editgroupschedule');
 			const headers = { Authorization: token };
 			const payload = {
 				start: starttime,
@@ -281,14 +283,13 @@ function Group(props) {
 							Members
 						</h3>{' '}
 						<div style={{ marginTop: '25px' }}>
-							<Button
-								color="primary"
+							<FaPlus
 								onClick={toggle}
-								style={{ paddingBottom: '5px' }}
-								size="sm"
-							>
-								<FaPlus />
-							</Button>
+								style={{
+									cursor: 'pointer',
+									color: 'blue',
+								}}
+							/>
 							<Modal isOpen={modal} toggle={toggle}>
 								<ModalHeader toggle={toggle}>Search users</ModalHeader>
 								<ModalBody>
@@ -305,10 +306,19 @@ function Group(props) {
 											/>
 										</FormGroup>
 									</Form>
+									{searchedusers ? <p>Click on a user to add</p> : null}
 									{searchedusers.map((user) => (
-										<div key={user.id} style={{ display: 'flex' }}>
-											<p>{user.username}</p>
-											<Button onClick={() => adduser(user.id)}>add</Button>
+										<div key={user._id} style={{ display: 'flex' }}>
+											<p
+												onClick={() => {
+													adduser(user.username, user._id);
+													setsearchedusers([]);
+													toggle();
+												}}
+												style={{ cursor: 'pointer', color: 'limegreen' }}
+											>
+												{user.username}
+											</p>
 										</div>
 									))}
 								</ModalBody>
@@ -350,16 +360,15 @@ function Group(props) {
 							>
 								{member.username}
 							</h5>
-							{username == creator ? (
-								<Button
-									color="danger"
-									size="sm"
+							{username == creator && username != creator ? (
+								<FaMinus
+									color="white"
+									size="2em"
 									onClick={() => {
 										setuserid(member.id);
 									}}
-								>
-									<FaMinus color="white" size="2em" />
-								</Button>
+									style={{ cursor: 'pointer', color: 'red' }}
+								/>
 							) : null}
 						</div>
 					))}
@@ -394,35 +403,93 @@ function Group(props) {
 									borderBottom: '2px solid black',
 								}}
 							>
-								<h1 style={{ textAlign: 'center' }}>
-									{`${groupname}'s `} Schedule
-								</h1>
-								{timeid && mode === 'delete' && (
-									<div>
-										Are you sure you want to delete?
-										<br />
-										<Button color="danger" onClick={async () => removetime()}>
-											yes
-										</Button>
-										<Button color="secondary" onClick={() => settimeid('')}>
-											cancel
-										</Button>
+								<div style={{ display: 'flex' }}>
+									<Link to="/home" style={{ position: 'absolute', left: '0' }}>
+										Back to home
+									</Link>
+									<h1 style={{ textAlign: 'center' }}>
+										{`${groupname}'s `} Schedule
+									</h1>
+								</div>
+								{timeid !== '' && mode === 'delete' && (
+									<div
+										style={{
+											position: 'absolute',
+											height: '100%',
+											width: '100%',
+											display: 'grid',
+											placeItems: 'center',
+										}}
+									>
+										<Alert color="danger">
+											Are you sure you want to delete this time?
+											<br />
+											<div
+												style={{ display: 'flex', justifyContent: 'center' }}
+											>
+												<Button
+													color="danger"
+													onClick={async () => removetime()}
+												>
+													yes
+												</Button>
+												<Button color="secondary" onClick={() => settimeid('')}>
+													cancel
+												</Button>
+											</div>
+										</Alert>
 									</div>
+									// <div>
+									// 	Are you sure you want to delete this time?
+									// 	<br />
+									// 	<Button color="danger" onClick={async () => removetime()}>
+									// 		yes
+									// 	</Button>
+									// 	<Button color="secondary" onClick={() => settimeid('')}>
+									// 		cancel
+									// 	</Button>
+									// </div>
 								)}
 								{userid && (
-									<div>
-										Are you sure you want to delete?
-										<br />
-										<Button color="danger" onClick={() => removeuser()}>
-											yes
-										</Button>
-										<Button color="secondary" onClick={() => setuserid('')}>
-											cancel
-										</Button>
+									<div
+										style={{
+											position: 'absolute',
+											height: '100%',
+											width: '100%',
+											display: 'grid',
+											placeItems: 'center',
+										}}
+									>
+										<Alert color="danger">
+											Are you sure you want to delete this user?
+											<br />
+											<div
+												style={{ display: 'flex', justifyContent: 'center' }}
+											>
+												<Button color="danger" onClick={() => removeuser()}>
+													yes
+												</Button>
+												<Button color="secondary" onClick={() => setuserid('')}>
+													cancel
+												</Button>
+											</div>
+										</Alert>
 									</div>
+									// <div>
+									// 	Are you sure you want to delete this user?
+									// 	<br />
+									// 	<Button color="danger" onClick={() => removeuser()}>
+									// 		yes
+									// 	</Button>
+									// 	<Button color="secondary" onClick={() => setuserid('')}>
+									// 		cancel
+									// 	</Button>
+									// </div>
 								)}
 
-								<div style={{ marginTop: '10px' }}>
+								<div
+									style={{ position: 'absolute', right: '80px', top: '50px' }}
+								>
 									<Button color="primary" onClick={toggletime}>
 										Add
 									</Button>
@@ -578,7 +645,7 @@ function Group(props) {
 									<Button
 										color="danger"
 										onClick={() => {
-											settimeid('none');
+											settimeid('');
 											setmode('delete');
 										}}
 									>
