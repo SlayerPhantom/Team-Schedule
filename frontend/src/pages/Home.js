@@ -586,24 +586,6 @@ function Home() {
 												</FormGroup>
 
 												<FormGroup>
-													<Label for="day of week">Select day of week</Label>
-													<Input
-														type="select"
-														name="select"
-														id="exampleSelect"
-														value={day}
-														onChange={(e) => setday(e.target.value)}
-													>
-														<option>sunday</option>
-														<option>monday</option>
-														<option>tuesday</option>
-														<option>wednesday</option>
-														<option>thursday</option>
-														<option>friday</option>
-														<option>saturday</option>
-													</Input>
-												</FormGroup>
-												<FormGroup>
 													<Label for="start time">new start time</Label>
 													<Input
 														type="time"
