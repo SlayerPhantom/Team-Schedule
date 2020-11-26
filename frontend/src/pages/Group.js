@@ -14,33 +14,37 @@ import {
 } from 'reactstrap';
 
 import buildURL from '../utils/buildURL';
-import groupmembers from '../utils/members';
-import userschedule from '../utils/schedule';
 
 function Group(props) {
 	const [searchedusers, setsearchedusers] = useState([]);
 	const [scheduleid, setscheduleid] = useState('');
 	const [timename, settimename] = useState('');
-	const [schedule, setschedule] = useState(userschedule);
+	const [schedule, setschedule] = useState({
+		sunday: [],
+		monday: [],
+		tuesday: [],
+		wednesday: [],
+		thursday: [],
+		friday: [],
+		saturday: [],
+	});
 	const [searchusername, setsearchusername] = useState('');
 	const [starttime, setstarttime] = useState('');
 	const [endtime, setendtime] = useState('');
 	const [groupid, setgroupid] = useState(props.match.params.groupid);
 	const [groupname, setgroupname] = useState('group 1');
-	const [username, setusername] = useState('');
+	const [username, setusername] = useState(localStorage.getItem('username'));
 	const [day, setday] = useState('');
-	const [token, settoken] = useState('');
+	const [token, settoken] = useState(localStorage.getItem('token'));
 	const [modal, setModal] = useState(false);
 	const [timemodal, settimeModal] = useState(false);
+	const [loading, setloading] = useState(true);
 	const [message, setMessage] = useState('');
-	const [members, setmembers] = useState(groupmembers);
+	const [members, setmembers] = useState([]);
 	const toggle = () => setModal(!modal);
 	const toggletime = () => settimeModal(!timemodal);
 
 	useEffect(() => {
-		settoken(localStorage.getItem('token'));
-		setusername(localStorage.getItem('username'));
-		setscheduleid(localStorage.getItem('scheduleid'));
 		const getgroupschedule = async (id) => {
 			try {
 				const url = buildURL(`api/schedule/getschedulegroup`);
