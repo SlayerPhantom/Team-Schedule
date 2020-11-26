@@ -82,7 +82,7 @@ router.post('/removeuser', async (req, res) => {
 
 router.post('/removegroup', async (req, res) => {
 	try {
-		const { id } = req.body.id;
+		const { id } = req.body;
 		const group = await Group.findById(id);
 		const members = group.members;
 		members.forEach(async (member) => {
