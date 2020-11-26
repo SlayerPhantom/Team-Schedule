@@ -14,6 +14,7 @@ import {
 	Alert,
 } from 'reactstrap';
 import buildURL from '../utils/buildURL';
+import bgimg from '../images/bgimg.jpg';
 function Home() {
 	const [groups, setgroups] = useState([]);
 	const [loading, setloading] = useState(true);
@@ -293,6 +294,11 @@ function Home() {
 					position: 'relative',
 				}}
 			>
+				<img
+					src={bgimg}
+					alt=""
+					style={{ width: '100%', height: '100%', opacity: 0.6 }}
+				/>
 				<div
 					style={{
 						width: '200px',
@@ -403,7 +409,6 @@ function Home() {
 						height: '100%',
 						width: `calc(100% - 200px)`,
 						left: '200px',
-						backgroundColor: 'blue',
 					}}
 				>
 					<div
@@ -685,7 +690,7 @@ function Home() {
 									style={{
 										flex: 1,
 										textAlign: 'center',
-										borderRight: '1px solid black',
+										// borderRight: '1px solid black',
 										fontWeight: 'bold',
 									}}
 								>
@@ -758,7 +763,7 @@ function Home() {
 									style={{
 										flex: 1,
 										textAlign: 'center',
-										borderRight: '1px solid black',
+										// borderRight: '1px solid black',
 										fontWeight: 'bold',
 									}}
 								>
@@ -831,7 +836,7 @@ function Home() {
 									style={{
 										flex: 1,
 										textAlign: 'center',
-										borderRight: '1px solid black',
+										// borderRight: '1px solid black',
 										fontWeight: 'bold',
 									}}
 								>
@@ -904,7 +909,7 @@ function Home() {
 									style={{
 										flex: 1,
 										textAlign: 'center',
-										borderRight: '1px solid black',
+										// borderRight: '1px solid black',
 										fontWeight: 'bold',
 									}}
 								>
@@ -977,7 +982,7 @@ function Home() {
 									style={{
 										flex: 1,
 										textAlign: 'center',
-										borderRight: '1px solid black',
+										// borderRight: '1px solid black',
 										fontWeight: 'bold',
 									}}
 								>
@@ -1050,7 +1055,7 @@ function Home() {
 									style={{
 										flex: 1,
 										textAlign: 'center',
-										borderRight: '1px solid black',
+										// borderRight: '1px solid black',
 										fontWeight: 'bold',
 									}}
 								>
@@ -1123,7 +1128,7 @@ function Home() {
 									style={{
 										flex: 1,
 										textAlign: 'center',
-										borderRight: '1px solid black',
+										// borderRight: '1px solid black',
 										fontWeight: 'bold',
 									}}
 								>

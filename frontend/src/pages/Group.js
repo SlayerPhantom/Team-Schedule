@@ -16,6 +16,7 @@ import {
 } from 'reactstrap';
 
 import buildURL from '../utils/buildURL';
+import bgimg from '../images/bgimg.jpg';
 
 function Group(props) {
 	const [searchedusers, setsearchedusers] = useState([]);
@@ -256,6 +257,11 @@ function Group(props) {
 					position: 'relative',
 				}}
 			>
+				<img
+					src={bgimg}
+					alt=""
+					style={{ width: '100%', height: '100%', opacity: 0.6 }}
+				/>
 				<div
 					style={{
 						width: '200px',
@@ -306,7 +312,9 @@ function Group(props) {
 											/>
 										</FormGroup>
 									</Form>
-									{searchedusers ? <p>Click on a user to add</p> : null}
+									{searchedusers.length !== 0 ? (
+										<p>Click on a user to add</p>
+									) : null}
 									{searchedusers.map((user) => (
 										<div key={user._id} style={{ display: 'flex' }}>
 											<p
@@ -380,7 +388,6 @@ function Group(props) {
 						height: '100%',
 						width: `calc(100% - 200px)`,
 						left: '200px',
-						backgroundColor: 'blue',
 					}}
 				>
 					<div
@@ -651,7 +658,7 @@ function Group(props) {
 									style={{
 										flex: 1,
 										textAlign: 'center',
-										borderRight: '1px solid black',
+										// borderRight: '1px solid black',
 										fontWeight: 'bold',
 									}}
 								>
@@ -724,7 +731,7 @@ function Group(props) {
 									style={{
 										flex: 1,
 										textAlign: 'center',
-										borderRight: '1px solid black',
+										// borderRight: '1px solid black',
 										fontWeight: 'bold',
 									}}
 								>
@@ -797,7 +804,7 @@ function Group(props) {
 									style={{
 										flex: 1,
 										textAlign: 'center',
-										borderRight: '1px solid black',
+										// borderRight: '1px solid black',
 										fontWeight: 'bold',
 									}}
 								>
@@ -870,7 +877,7 @@ function Group(props) {
 									style={{
 										flex: 1,
 										textAlign: 'center',
-										borderRight: '1px solid black',
+										// borderRight: '1px solid black',
 										fontWeight: 'bold',
 									}}
 								>
@@ -943,7 +950,7 @@ function Group(props) {
 									style={{
 										flex: 1,
 										textAlign: 'center',
-										borderRight: '1px solid black',
+										// borderRight: '1px solid black',
 										fontWeight: 'bold',
 									}}
 								>
@@ -1016,7 +1023,7 @@ function Group(props) {
 									style={{
 										flex: 1,
 										textAlign: 'center',
-										borderRight: '1px solid black',
+										// borderRight: '1px solid black',
 										fontWeight: 'bold',
 									}}
 								>
@@ -1089,7 +1096,7 @@ function Group(props) {
 									style={{
 										flex: 1,
 										textAlign: 'center',
-										borderRight: '1px solid black',
+										// borderRight: '1px solid black',
 										fontWeight: 'bold',
 									}}
 								>
