@@ -58,7 +58,6 @@ function Home() {
 						setMessage(errors);
 						return;
 					}
-					console.log(res.data.groups);
 					setgroups(res.data.groups);
 				} catch (error) {
 					console.log(error);
@@ -156,8 +155,7 @@ function Home() {
 				setMessage(errors);
 				return;
 			}
-			const { schedule } = res.data;
-			setschedule(schedule);
+			setschedule(res.data.schedule);
 			setMessage('successfully edited message');
 			toggletimeedit();
 		} catch (error) {
