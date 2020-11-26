@@ -163,9 +163,6 @@ function Home() {
 		}
 	}
 
-	async function removetime() {
-		console.log('remove time');
-	}
 	async function addtime() {
 		try {
 			const url = buildURL('api/schedule/addtimeuser');
@@ -416,6 +413,7 @@ function Home() {
 														return;
 													}
 													settimeid('');
+													setschedule(res.data.schedule);
 													setMessage(res.data.message);
 												} catch (error) {
 													console.log(error);

@@ -355,6 +355,7 @@ router.delete('/removetimeuser', auth, async (req, res) => {
 		}
 		return res.json({
 			message: `successfully removed time`,
+			schedule,
 		});
 	} catch (error) {
 		console.error(error);
