@@ -1200,7 +1200,7 @@ function Home() {
 							</div>
 						</div>
 						<div style={{ position: 'absolute', right: '20px', top: '5px' }}>
-							<Button onClick={toggleschedulemode}>
+							<Button color="info" onClick={toggleschedulemode}>
 								{schedulemode == 'all'
 									? 'switch to user schedule'
 									: 'switch to all'}
