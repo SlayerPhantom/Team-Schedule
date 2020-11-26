@@ -26,6 +26,7 @@ function Home() {
 		saturday: [],
 	});
 	const [groupname, setgroupname] = useState('');
+	const [groupid, setgroupid] = useState('');
 	const [timename, settimename] = useState('');
 	const [starttime, setstarttime] = useState('');
 	const [endtime, setendtime] = useState('');
@@ -114,10 +115,10 @@ function Home() {
 		window.location.replace(url);
 	}
 
-	async function removeGroup(id) {
+	async function removeGroup() {
 		try {
 			const url = buildURL('api/group/removegroup');
-			const payload = { id };
+			const payload = { id: groupid };
 			const res = await axios.post(url, payload);
 			if (res.data.errors) {
 				const { errors } = res.data;
@@ -126,10 +127,11 @@ function Home() {
 				return;
 			}
 			setMessage(res.data.message);
-			setgroups(groups.filter((group) => group.id !== id));
+			setgroups(groups.filter((group) => group.id != groupid));
 			setTimeout(() => {
 				setMessage('');
 			}, 2000);
+			setgroupid('');
 		} catch (error) {
 			console.log(error);
 		}
@@ -351,7 +353,9 @@ function Home() {
 								<Button
 									color="danger"
 									size="sm"
-									onClick={() => removeGroup(group.id)}
+									onClick={() => {
+										setgroupid(group.id);
+									}}
 								>
 									<FaMinus color="white" size="2em" />
 								</Button>
@@ -423,6 +427,18 @@ function Home() {
 											yes
 										</Button>
 										<Button color="secondary" onClick={() => settimeid('')}>
+											cancel
+										</Button>
+									</div>
+								)}
+								{groupid && (
+									<div>
+										Are you sure you want to delete?
+										<br />
+										<Button color="danger" onClick={() => removeGroup}>
+											yes
+										</Button>
+										<Button color="secondary" onClick={() => setgroupid('')}>
 											cancel
 										</Button>
 									</div>

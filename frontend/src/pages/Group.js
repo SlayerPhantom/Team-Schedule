@@ -35,6 +35,7 @@ function Group(props) {
 	const [groupname, setgroupname] = useState('group 1');
 	const [username, setusername] = useState(localStorage.getItem('username'));
 	const [day, setday] = useState('');
+	const [userid, setuserid] = useState('');
 	const [token, settoken] = useState(localStorage.getItem('token'));
 	const [modal, setModal] = useState(false);
 	const [timemodal, settimeModal] = useState(false);
@@ -45,10 +46,10 @@ function Group(props) {
 	const toggletime = () => settimeModal(!timemodal);
 
 	useEffect(() => {
-		const getgroupschedule = async (id) => {
+		const getgroupschedule = async () => {
 			try {
 				const url = buildURL(`api/schedule/getschedulegroup`);
-				const payload = { id };
+				const payload = { id: groupid };
 				const res = await axios.post(url, payload);
 				if (res.data.errors) {
 					const { errors } = res.data;
@@ -77,11 +78,12 @@ function Group(props) {
 					saturday,
 					sunday,
 				});
+				setloading(false);
 			} catch (error) {
 				console.log(error);
 			}
 		};
-		getgroupschedule(groupid);
+		getgroupschedule();
 	}, []);
 
 	function onHover(e) {
@@ -92,10 +94,10 @@ function Group(props) {
 		e.target.style.color = 'white';
 	}
 
-	async function removeuser(userid) {
+	async function removeuser() {
 		try {
 			const url = buildURL('api/group/removeuser');
-			const payload = { userid, groupid };
+			const payload = { userid, id: groupid };
 			const res = await axios.delete(url, payload);
 			if (res.data.errors) {
 				const { errors } = res.data;
@@ -103,17 +105,17 @@ function Group(props) {
 				setMessage(errors);
 				return;
 			}
-			setmembers(members.filter((member) => member.id !== userid));
+			setmembers(members.filter((member) => member.id != userid));
 			setMessage(res.data.message);
 		} catch (error) {
 			console.log(error);
 		}
 	}
 
-	async function adduser(id, name, userid) {
+	async function adduser(name, userid) {
 		try {
 			const url = buildURL('api/group/adduser');
-			const payload = { id, name, userid };
+			const payload = { id: groupid, name, userid };
 			const res = axios.post(url, payload);
 			if (res.data.errors) {
 				const { errors } = res.data;
@@ -121,7 +123,7 @@ function Group(props) {
 				setMessage(errors);
 				return;
 			}
-			setmembers([...members, { username: name, id }]);
+			setmembers([...members, { username: name, id: userid }]);
 			setMessage(res.data.message);
 		} catch (error) {
 			console.log(error);
@@ -154,7 +156,7 @@ function Group(props) {
 				end: endtime,
 				name: timename,
 				day,
-				id: props.match.params.groupid,
+				id: groupid,
 			};
 			const res = await axios.post(url, payload, { headers });
 			if (res.data.errors) {
@@ -163,35 +165,41 @@ function Group(props) {
 				setMessage(errors);
 				return;
 			}
-			const time = { start: starttime, end: endtime, name: timename };
-			switch (day) {
-				case 'monday':
-					schedule.monday.push(time);
-					break;
-				case 'tuesday':
-					schedule.tuesday.push(time);
-					break;
-				case 'wednesday':
-					schedule.wednesday.push(time);
-					break;
-				case 'thursday':
-					schedule.thursday.push(time);
-					break;
-				case 'friday':
-					schedule.friday.push(time);
-					break;
-				case 'saturday':
-					schedule.saturday.push(time);
-					break;
-				case 'sunday':
-					schedule.sunday.push(time);
-					break;
-				default:
-					console.log('not a valid day');
-			}
-			setschedule(schedule);
+
+			setschedule(res.data.schedule);
 			setMessage(res.data.message);
-		} catch (error) {}
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
+	async function edittime() {
+		try {
+			const url = buildURL('api/schedule/editgroupchedule');
+			const headers = { Authorization: token };
+			const payload = {
+				start: starttime,
+				end: endtime,
+				day,
+				timeid,
+				name: timename,
+				id: scheduleid,
+			};
+			const res = await axios.post(url, payload, {
+				headers,
+			});
+			if (res.data.errors) {
+				const { errors } = res.data;
+				console.log(errors);
+				setMessage(errors);
+				return;
+			}
+			setschedule(res.data.schedule);
+			setMessage('successfully edited message');
+			toggletimeedit();
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	return (

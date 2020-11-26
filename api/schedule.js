@@ -115,7 +115,7 @@ router.post('/addtimegroup', auth, async (req, res) => {
 				return res.json({ errors: 'not a valid day' });
 		}
 		await schedule.save();
-		return res.json({ message: 'successfully added time' });
+		return res.json({ schedule, message: 'successfully added time' });
 	} catch (error) {
 		console.error(error);
 		return res.json({ errors: error });
@@ -214,7 +214,7 @@ router.post('/edituserschedule', auth, async (req, res) => {
 		return res.json({ errors: error });
 	}
 });
-router.post('/edituserschedule', async (req, res) => {
+router.post('/editgroupschedule', async (req, res) => {
 	try {
 		const { start, end, timeid, id, name, day } = req.body;
 		console.log(day);

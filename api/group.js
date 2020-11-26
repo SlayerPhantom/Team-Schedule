@@ -68,10 +68,10 @@ router.post('/removeuser', async (req, res) => {
 	try {
 		const { id, userid } = req.body;
 		const user = await User.findById(userid);
-		user.groups = user.groups.filter((group) => group.id !== id);
+		user.groups = user.groups.filter((group) => group.id != id);
 		await user.save();
 		const group = await Group.findById(id);
-		group.members = groups.members.filter((member) => member.id !== userid);
+		group.members = groups.members.filter((member) => member.id != userid);
 		await group.save();
 		return res.json({ message: 'successfully removed user from group' });
 	} catch (error) {
