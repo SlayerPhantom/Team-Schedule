@@ -659,7 +659,7 @@ function Group(props) {
 									<div>
 										{mode === 'edit'
 											? schedule.sunday.map((day) => (
-													<p
+													<div
 														key={day._id}
 														onClick={() => {
 															settimeid(day._id);
@@ -672,13 +672,17 @@ function Group(props) {
 															padding: '5px',
 														}}
 													>
-														{day.name} : {day.start} - {day.end}
-													</p>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 										{mode === 'delete'
 											? schedule.sunday.map((day) => (
-													<p
+													<div
 														key={day._id}
 														onClick={() => {
 															setday('sunday');
@@ -690,15 +694,28 @@ function Group(props) {
 															padding: '5px',
 														}}
 													>
-														{day.name} : {day.start} - {day.end}
-													</p>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 										{mode === 'none'
 											? schedule.sunday.map((day) => (
-													<p key={day._id} style={{ padding: '5px' }}>
-														{day.name} : {day.start} - {day.end}
-													</p>
+													<div
+														style={{
+															padding: '0 2px 0 3px',
+														}}
+														key={day._id}
+													>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 									</div>
@@ -715,7 +732,7 @@ function Group(props) {
 									<div>
 										{mode === 'edit'
 											? schedule.monday.map((day) => (
-													<p
+													<div
 														key={day._id}
 														onClick={() => {
 															settimeid(day._id);
@@ -728,13 +745,17 @@ function Group(props) {
 															padding: '5px',
 														}}
 													>
-														{day.name} : {day.start} - {day.end}
-													</p>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 										{mode === 'delete'
 											? schedule.monday.map((day) => (
-													<p
+													<div
 														key={day._id}
 														onClick={() => {
 															setday('monday');
@@ -746,15 +767,28 @@ function Group(props) {
 															padding: '5px',
 														}}
 													>
-														{day.name} : {day.start} - {day.end}
-													</p>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 										{mode === 'none'
 											? schedule.monday.map((day) => (
-													<p key={day._id} style={{ padding: '5px' }}>
-														{day.name} : {day.start} - {day.end}
-													</p>
+													<div
+														style={{
+															padding: '0 2px 0 3px',
+														}}
+														key={day._id}
+													>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 									</div>
@@ -771,7 +805,7 @@ function Group(props) {
 									<div>
 										{mode === 'edit'
 											? schedule.tuesday.map((day) => (
-													<p
+													<div
 														key={day._id}
 														onClick={() => {
 															settimeid(day._id);
@@ -784,13 +818,17 @@ function Group(props) {
 															padding: '5px',
 														}}
 													>
-														{day.name} : {day.start} - {day.end}
-													</p>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 										{mode === 'delete'
 											? schedule.tuesday.map((day) => (
-													<p
+													<div
 														key={day._id}
 														onClick={() => {
 															setday('tuesday');
@@ -802,15 +840,28 @@ function Group(props) {
 															padding: '5px',
 														}}
 													>
-														{day.name} : {day.start} - {day.end}
-													</p>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 										{mode === 'none'
 											? schedule.tuesday.map((day) => (
-													<p key={day._id} style={{ padding: '5px' }}>
-														{day.name} : {day.start} - {day.end}
-													</p>
+													<div
+														style={{
+															padding: '0 2px 0 3px',
+														}}
+														key={day._id}
+													>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 									</div>
@@ -827,7 +878,7 @@ function Group(props) {
 									<div>
 										{mode === 'edit'
 											? schedule.wednesday.map((day) => (
-													<p
+													<div
 														key={day._id}
 														onClick={() => {
 															settimeid(day._id);
@@ -840,14 +891,18 @@ function Group(props) {
 															padding: '5px',
 														}}
 													>
-														{day.name} : {day.start} - {day.end}
-													</p>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 										{mode === 'delete'
 											? schedule.wednesday.map((day) => (
-													<p
-														key={day.id}
+													<div
+														key={day._id}
 														onClick={() => {
 															setday('wednesday');
 															settimeid(day._id);
@@ -858,15 +913,28 @@ function Group(props) {
 															padding: '5px',
 														}}
 													>
-														{day.name} : {day.start} - {day.end}
-													</p>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 										{mode === 'none'
 											? schedule.wednesday.map((day) => (
-													<p key={day._id} style={{ padding: '5px' }}>
-														{day.name} : {day.start} - {day.end}
-													</p>
+													<div
+														style={{
+															padding: '0 2px 0 3px',
+														}}
+														key={day._id}
+													>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 									</div>
@@ -883,7 +951,7 @@ function Group(props) {
 									<div>
 										{mode === 'edit'
 											? schedule.thursday.map((day) => (
-													<p
+													<div
 														key={day._id}
 														onClick={() => {
 															settimeid(day._id);
@@ -896,13 +964,17 @@ function Group(props) {
 															padding: '5px',
 														}}
 													>
-														{day.name} : {day.start} - {day.end}
-													</p>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 										{mode === 'delete'
 											? schedule.thursday.map((day) => (
-													<p
+													<div
 														key={day._id}
 														onClick={() => {
 															setday('thursday');
@@ -914,15 +986,28 @@ function Group(props) {
 															padding: '5px',
 														}}
 													>
-														{day.name} : {day.start} - {day.end}
-													</p>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 										{mode === 'none'
 											? schedule.thursday.map((day) => (
-													<p key={day._id} style={{ padding: '5px' }}>
-														{day.name} : {day.start} - {day.end}
-													</p>
+													<div
+														style={{
+															padding: '0 2px 0 3px',
+														}}
+														key={day._id}
+													>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 									</div>
@@ -939,7 +1024,7 @@ function Group(props) {
 									<div>
 										{mode === 'edit'
 											? schedule.friday.map((day) => (
-													<p
+													<div
 														key={day._id}
 														onClick={() => {
 															settimeid(day._id);
@@ -952,13 +1037,17 @@ function Group(props) {
 															padding: '5px',
 														}}
 													>
-														{day.name} : {day.start} - {day.end}
-													</p>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 										{mode === 'delete'
 											? schedule.friday.map((day) => (
-													<p
+													<div
 														key={day._id}
 														onClick={() => {
 															setday('friday');
@@ -970,15 +1059,28 @@ function Group(props) {
 															padding: '5px',
 														}}
 													>
-														{day.name} : {day.start} - {day.end}
-													</p>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 										{mode === 'none'
 											? schedule.friday.map((day) => (
-													<p key={day._id} style={{ padding: '5px' }}>
-														{day.name} : {day.start} - {day.end}
-													</p>
+													<div
+														style={{
+															padding: '0 2px 0 3px',
+														}}
+														key={day._id}
+													>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 									</div>
@@ -995,7 +1097,7 @@ function Group(props) {
 									<div>
 										{mode === 'edit'
 											? schedule.saturday.map((day) => (
-													<p
+													<div
 														key={day._id}
 														onClick={() => {
 															settimeid(day._id);
@@ -1008,13 +1110,17 @@ function Group(props) {
 															padding: '5px',
 														}}
 													>
-														{day.name} : {day.start} - {day.end}
-													</p>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 										{mode === 'delete'
 											? schedule.saturday.map((day) => (
-													<p
+													<div
 														key={day._id}
 														onClick={() => {
 															setday('saturday');
@@ -1026,15 +1132,28 @@ function Group(props) {
 															padding: '5px',
 														}}
 													>
-														{day.name} : {day.start} - {day.end}
-													</p>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 										{mode === 'none'
 											? schedule.saturday.map((day) => (
-													<p key={day._id} style={{ padding: '5px' }}>
-														{day.name} : {day.start} - {day.end}
-													</p>
+													<div
+														style={{
+															padding: '0 2px 0 3px',
+														}}
+														key={day._id}
+													>
+														<p style={{ fontweight: 'bold' }}>
+															{day.name}
+															<br />
+															{day.start} - {day.end}
+														</p>
+													</div>
 											  ))
 											: null}
 									</div>
