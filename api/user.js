@@ -93,4 +93,14 @@ router.post('/user/search', async (req, res) => {
 	}
 });
 
+router.get('/user/getgroups', auth, async (req, res) => {
+	try {
+		const user = await User.findById(req.user.id);
+		return res.json({ groups: user.groups });
+	} catch (error) {
+		console.error(error);
+		return res.json({ errors: error });
+	}
+});
+
 module.exports = router;

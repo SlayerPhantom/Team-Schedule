@@ -13,13 +13,19 @@ import {
 	Input,
 } from 'reactstrap';
 import buildURL from '../utils/buildURL';
-import usergroups from '../utils/groups';
-import userschedule from '../utils/schedule';
 function Home() {
-	const [groups, setgroups] = useState(usergroups);
+	const [groups, setgroups] = useState([]);
 	const [loading, setloading] = useState(true);
 	const [scheduleid, setscheduleid] = useState('');
-	const [schedule, setschedule] = useState(userschedule);
+	const [schedule, setschedule] = useState({
+		sunday: [],
+		monday: [],
+		tuesday: [],
+		wednesday: [],
+		thursday: [],
+		friday: [],
+		saturday: [],
+	});
 	const [groupname, setgroupname] = useState('');
 	const [timename, settimename] = useState('');
 	const [starttime, setstarttime] = useState('');
@@ -27,7 +33,7 @@ function Home() {
 	const [day, setday] = useState('');
 	const [timeid, settimeid] = useState('');
 	const [token, settoken] = useState('');
-	const [username, setusername] = useState('unravelphantom');
+	const [username, setusername] = useState('');
 	const [modal, setModal] = useState(false);
 	const [timemodal, settimeModal] = useState(false);
 	const [edittimemodal, setedittimeModal] = useState(false);
@@ -41,41 +47,62 @@ function Home() {
 		settoken(localStorage.getItem('token'));
 		setusername(localStorage.getItem('username'));
 		setscheduleid(localStorage.getItem('scheduleid'));
-		const getuserschedule = async () => {
-			try {
-				const headers = { token };
-				const url = buildURL('api/schedule/getscheduleuser');
-				const res = await axios.get(url, { headers });
-				if (res.data.errors) {
-					const { errors } = res.data;
-					console.log(errors);
-					setMessage(errors);
-					return;
+		const onload = async () => {
+			const getusergroups = async () => {
+				try {
+					const headers = { token };
+					const url = buildURL('api/user/getgroups');
+					const res = await axios.get(url, { headers });
+					if (res.data.errors) {
+						const { errors } = res.data;
+						console.log(errors);
+						setMessage(errors);
+						return;
+					}
+					console.log(res.data.groups);
+					setgroups(res.data.groups);
+				} catch (error) {
+					console.log(error);
 				}
-				const {
-					monday,
-					tuesday,
-					wednesday,
-					thursday,
-					friday,
-					saturday,
-					sunday,
-				} = res.data;
-				setschedule({
-					monday,
-					tuesday,
-					wednesday,
-					thursday,
-					friday,
-					saturday,
-					sunday,
-				});
-				setloading(false);
-			} catch (error) {
-				console.log(error);
-			}
+			};
+			const getuserschedule = async () => {
+				try {
+					const headers = { token };
+					const url = buildURL('api/schedule/getscheduleuser');
+					const res = await axios.get(url, { headers });
+					if (res.data.errors) {
+						const { errors } = res.data;
+						console.log(errors);
+						setMessage(errors);
+						return;
+					}
+					const {
+						monday,
+						tuesday,
+						wednesday,
+						thursday,
+						friday,
+						saturday,
+						sunday,
+					} = res.data;
+					setschedule({
+						monday,
+						tuesday,
+						wednesday,
+						thursday,
+						friday,
+						saturday,
+						sunday,
+					});
+					setloading(false);
+				} catch (error) {
+					console.log(error);
+				}
+			};
+			await getusergroups();
+			await getuserschedule();
 		};
-		getuserschedule();
+		onload();
 	}, []);
 
 	function logout() {
