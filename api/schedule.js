@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Schedule = require('../models/Schedule');
 const User = require('../models/User');
+const Group = require('../models/Group');
 
 const auth = require('../utils/auth');
 
@@ -408,6 +409,7 @@ router.post('/removetimegroup', auth, async (req, res) => {
 		}
 		return res.json({
 			message: `successfully removed time`,
+			schedule,
 		});
 	} catch (error) {
 		console.error(error);

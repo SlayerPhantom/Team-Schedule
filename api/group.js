@@ -98,4 +98,15 @@ router.post('/removegroup', async (req, res) => {
 	}
 });
 
+router.post('/getcreator', async (req, res) => {
+	try {
+		const { id } = req.body;
+		const group = await Group.findById(id);
+		return res.json({ creator: group.creator, members: group.members });
+	} catch (error) {
+		console.error(error);
+		return res.json({ errors: error });
+	}
+});
+
 module.exports = router;

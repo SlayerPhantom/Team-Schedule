@@ -112,7 +112,7 @@ function Home() {
 	}
 	function gotogroup(id) {
 		const url = buildURL(`group/${id}`);
-		window.location.replace(url);
+		window.location.replace(`/group/${id}`);
 	}
 
 	async function removeGroup() {
@@ -344,6 +344,7 @@ function Home() {
 								onMouseOver={onHover}
 								onMouseLeave={offHover}
 								onClick={() => {
+									localStorage.setItem('groupname', group.name);
 									gotogroup(group.id);
 								}}
 							>
@@ -396,7 +397,7 @@ function Home() {
 								<h1 style={{ textAlign: 'center' }}>
 									{`${username}'s `} Schedule
 								</h1>
-								{timeid && (
+								{timeid && mode === 'delete' && (
 									<div>
 										Are you sure you want to delete?
 										<br />
