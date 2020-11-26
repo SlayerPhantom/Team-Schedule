@@ -199,7 +199,7 @@ router.post('/edituserschedule', auth, async (req, res) => {
 		switch (day) {
 			case sunday:
 				schedule.sunday = schedule.sunday.filter((time) => {
-					if (time.id === timeid) {
+					if (time._id === timeid) {
 						time.name = name;
 						time.start = start;
 						time.end = end;
@@ -210,7 +210,7 @@ router.post('/edituserschedule', auth, async (req, res) => {
 				break;
 			case monday:
 				schedule.monday = schedule.monday.filter((time) => {
-					if (time.id === timeid) {
+					if (time._id === timeid) {
 						time.name = name;
 						time.start = start;
 						time.end = end;
@@ -221,7 +221,7 @@ router.post('/edituserschedule', auth, async (req, res) => {
 				break;
 			case tuesday:
 				schedule.tuesday = schedule.tuesday.filter((time) => {
-					if (time.id === timeid) {
+					if (time._id === timeid) {
 						time.name = name;
 						time.start = start;
 						time.end = end;
@@ -232,7 +232,7 @@ router.post('/edituserschedule', auth, async (req, res) => {
 				break;
 			case wednesday:
 				schedule.wednesday = schedule.wednesday.filter((time) => {
-					if (time.id === timeid) {
+					if (time._id === timeid) {
 						time.name = name;
 						time.start = start;
 						time.end = end;
@@ -243,7 +243,7 @@ router.post('/edituserschedule', auth, async (req, res) => {
 				break;
 			case thursday:
 				schedule.thursday = schedule.thursday.filter((time) => {
-					if (time.id === timeid) {
+					if (time._id === timeid) {
 						time.name = name;
 						time.start = start;
 						time.end = end;
@@ -254,7 +254,7 @@ router.post('/edituserschedule', auth, async (req, res) => {
 				break;
 			case friday:
 				schedule.friday = schedule.friday.filter((time) => {
-					if (time.id === timeid) {
+					if (time._id === timeid) {
 						time.name = name;
 						time.start = start;
 						time.end = end;
@@ -265,7 +265,7 @@ router.post('/edituserschedule', auth, async (req, res) => {
 				break;
 			case saturday:
 				schedule.saturday = schedule.saturday.filter((time) => {
-					if (time.id === timeid) {
+					if (time._id === timeid) {
 						time.name = name;
 						time.start = start;
 						time.end = end;
