@@ -201,6 +201,7 @@ function Group(props) {
 				day,
 				id: groupid,
 			};
+			console.log(payload);
 			const res = await axios.post(url, payload, { headers });
 			if (res.data.errors) {
 				const { errors } = res.data;
@@ -239,7 +240,6 @@ function Group(props) {
 				return;
 			}
 			setschedule(res.data.schedule);
-			setMessage('successfully edited message');
 			toggletimeedit();
 		} catch (error) {
 			console.log(error);
@@ -666,7 +666,11 @@ function Group(props) {
 															setday('sunday');
 															toggletimeedit();
 														}}
-														style={{ color: 'green', cursor: 'pointer' }}
+														style={{
+															color: 'green',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -680,7 +684,11 @@ function Group(props) {
 															setday('sunday');
 															settimeid(day._id);
 														}}
-														style={{ color: 'crimson', cursor: 'pointer' }}
+														style={{
+															color: 'crimson',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -688,7 +696,7 @@ function Group(props) {
 											: null}
 										{mode === 'none'
 											? schedule.sunday.map((day) => (
-													<p key={day._id}>
+													<p key={day._id} style={{ padding: '5px' }}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))
@@ -714,7 +722,11 @@ function Group(props) {
 															setday('monday');
 															toggletimeedit();
 														}}
-														style={{ color: 'green', cursor: 'pointer' }}
+														style={{
+															color: 'green',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -728,7 +740,11 @@ function Group(props) {
 															setday('monday');
 															settimeid(day._id);
 														}}
-														style={{ color: 'crimson', cursor: 'pointer' }}
+														style={{
+															color: 'crimson',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -736,7 +752,7 @@ function Group(props) {
 											: null}
 										{mode === 'none'
 											? schedule.monday.map((day) => (
-													<p key={day._id}>
+													<p key={day._id} style={{ padding: '5px' }}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))
@@ -762,7 +778,11 @@ function Group(props) {
 															setday('tuesday');
 															toggletimeedit();
 														}}
-														style={{ color: 'green', cursor: 'pointer' }}
+														style={{
+															color: 'green',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -776,7 +796,11 @@ function Group(props) {
 															setday('tuesday');
 															settimeid(day._id);
 														}}
-														style={{ color: 'crimson', cursor: 'pointer' }}
+														style={{
+															color: 'crimson',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -784,7 +808,7 @@ function Group(props) {
 											: null}
 										{mode === 'none'
 											? schedule.tuesday.map((day) => (
-													<p key={day._id}>
+													<p key={day._id} style={{ padding: '5px' }}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))
@@ -810,7 +834,11 @@ function Group(props) {
 															setday('wednesday');
 															toggletimeedit();
 														}}
-														style={{ color: 'green', cursor: 'pointer' }}
+														style={{
+															color: 'green',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -824,7 +852,11 @@ function Group(props) {
 															setday('wednesday');
 															settimeid(day._id);
 														}}
-														style={{ color: 'crimson', cursor: 'pointer' }}
+														style={{
+															color: 'crimson',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -832,7 +864,7 @@ function Group(props) {
 											: null}
 										{mode === 'none'
 											? schedule.wednesday.map((day) => (
-													<p key={day._id}>
+													<p key={day._id} style={{ padding: '5px' }}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))
@@ -858,7 +890,11 @@ function Group(props) {
 															setday('thursday');
 															toggletimeedit();
 														}}
-														style={{ color: 'green', cursor: 'pointer' }}
+														style={{
+															color: 'green',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -872,7 +908,11 @@ function Group(props) {
 															setday('thursday');
 															settimeid(day._id);
 														}}
-														style={{ color: 'crimson', cursor: 'pointer' }}
+														style={{
+															color: 'crimson',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -880,7 +920,7 @@ function Group(props) {
 											: null}
 										{mode === 'none'
 											? schedule.thursday.map((day) => (
-													<p key={day._id}>
+													<p key={day._id} style={{ padding: '5px' }}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))
@@ -906,7 +946,11 @@ function Group(props) {
 															setday('friday');
 															toggletimeedit();
 														}}
-														style={{ color: 'green', cursor: 'pointer' }}
+														style={{
+															color: 'green',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -920,7 +964,11 @@ function Group(props) {
 															setday('friday');
 															settimeid(day._id);
 														}}
-														style={{ color: 'crimson', cursor: 'pointer' }}
+														style={{
+															color: 'crimson',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -928,7 +976,7 @@ function Group(props) {
 											: null}
 										{mode === 'none'
 											? schedule.friday.map((day) => (
-													<p key={day._id}>
+													<p key={day._id} style={{ padding: '5px' }}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))
@@ -954,7 +1002,11 @@ function Group(props) {
 															setday('saturday');
 															toggletimeedit();
 														}}
-														style={{ color: 'green', cursor: 'pointer' }}
+														style={{
+															color: 'green',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -968,7 +1020,11 @@ function Group(props) {
 															setday('saturday');
 															settimeid(day._id);
 														}}
-														style={{ color: 'crimson', cursor: 'pointer' }}
+														style={{
+															color: 'crimson',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -976,7 +1032,7 @@ function Group(props) {
 											: null}
 										{mode === 'none'
 											? schedule.saturday.map((day) => (
-													<p key={day._id}>
+													<p key={day._id} style={{ padding: '5px' }}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))

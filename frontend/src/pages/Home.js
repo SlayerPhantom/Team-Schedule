@@ -43,6 +43,7 @@ function Home() {
 	const [edittimemodal, setedittimeModal] = useState(false);
 	const [message, setMessage] = useState('');
 	const [mode, setmode] = useState('none');
+	const [schedulemode, setschedulemode] = useState('user');
 	const toggle = () => setModal(!modal);
 	const toggletime = () => settimeModal(!timemodal);
 	const toggletimeedit = () => setedittimeModal(!edittimemodal);
@@ -104,6 +105,64 @@ function Home() {
 		};
 		onload();
 	}, []);
+
+	async function mergeschedules() {
+		const url = buildURL('api/schedule/getuserassociatedschedule');
+		const headers = { Authorization: token };
+		const res = await axios.get(url, { headers });
+		if (res.data.errors) {
+			console.log(res.data.errors);
+			return;
+		}
+		setschedule(res.data.schedule);
+	}
+
+	function toggleschedulemode() {
+		setloading(true);
+		if (schedulemode === 'all') {
+			const getuserschedule = async () => {
+				try {
+					const headers = { Authorization: token };
+					const url = buildURL('api/schedule/getscheduleuser');
+					const res = await axios.get(url, { headers });
+					if (res.data.errors) {
+						const { errors } = res.data;
+						console.log(errors);
+						setMessage(errors);
+						return;
+					}
+					const {
+						monday,
+						tuesday,
+						wednesday,
+						thursday,
+						friday,
+						saturday,
+						sunday,
+					} = res.data;
+					setschedule({
+						monday,
+						tuesday,
+						wednesday,
+						thursday,
+						friday,
+						saturday,
+						sunday,
+					});
+					setloading(false);
+				} catch (error) {
+					console.log(error);
+				}
+			};
+			getuserschedule();
+			setschedulemode('user');
+			setloading(false);
+		} else {
+			setschedulemode('all');
+			mergeschedules();
+			setloading(false);
+		}
+	}
 
 	function logout() {
 		localStorage.removeItem('username');
@@ -184,35 +243,9 @@ function Home() {
 				setMessage(errors);
 				return;
 			}
-			const time = { start: starttime, end: endtime, name: timename };
-			switch (day) {
-				case 'monday':
-					schedule.monday.push(time);
-					break;
-				case 'tuesday':
-					schedule.tuesday.push(time);
-					break;
-				case 'wednesday':
-					schedule.wednesday.push(time);
-					break;
-				case 'thursday':
-					schedule.thursday.push(time);
-					break;
-				case 'friday':
-					schedule.friday.push(time);
-					break;
-				case 'saturday':
-					schedule.saturday.push(time);
-					break;
-				case 'sunday':
-					schedule.sunday.push(time);
-					break;
-				default:
-					console.log('not a valid day');
-			}
-			setschedule(schedule);
+
+			setschedule(res.data.schedule);
 			toggletime();
-			setMessage(res.data.message);
 		} catch (error) {}
 	}
 
@@ -560,15 +593,17 @@ function Home() {
 											</Button>
 										</ModalFooter>
 									</Modal>
-									<Button
-										color="success"
-										onClick={() => {
-											settimeid('none');
-											setmode('edit');
-										}}
-									>
-										Edit
-									</Button>
+									{schedulemode === 'all' ? null : (
+										<Button
+											color="success"
+											onClick={() => {
+												settimeid('none');
+												setmode('edit');
+											}}
+										>
+											Edit
+										</Button>
+									)}
 									<Modal isOpen={edittimemodal} toggle={toggletimeedit}>
 										<ModalHeader toggle={toggletimeedit}>Edit time</ModalHeader>
 										<ModalBody>
@@ -621,15 +656,17 @@ function Home() {
 											</Button>
 										</ModalFooter>
 									</Modal>
-									<Button
-										color="danger"
-										onClick={() => {
-											settimeid('');
-											setmode('delete');
-										}}
-									>
-										delete
-									</Button>
+									{schedulemode === 'all' ? null : (
+										<Button
+											color="danger"
+											onClick={() => {
+												settimeid('');
+												setmode('delete');
+											}}
+										>
+											delete
+										</Button>
+									)}
 									{mode !== 'none' ? (
 										<Button
 											color="secondary"
@@ -663,7 +700,11 @@ function Home() {
 															setday('sunday');
 															toggletimeedit();
 														}}
-														style={{ color: 'green', cursor: 'pointer' }}
+														style={{
+															color: 'green',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -677,7 +718,11 @@ function Home() {
 															setday('sunday');
 															settimeid(day._id);
 														}}
-														style={{ color: 'crimson', cursor: 'pointer' }}
+														style={{
+															color: 'crimson',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -685,7 +730,7 @@ function Home() {
 											: null}
 										{mode === 'none'
 											? schedule.sunday.map((day) => (
-													<p key={day._id}>
+													<p key={day._id} style={{ padding: '5px' }}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))
@@ -711,7 +756,11 @@ function Home() {
 															setday('monday');
 															toggletimeedit();
 														}}
-														style={{ color: 'green', cursor: 'pointer' }}
+														style={{
+															color: 'green',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -725,7 +774,11 @@ function Home() {
 															setday('monday');
 															settimeid(day._id);
 														}}
-														style={{ color: 'crimson', cursor: 'pointer' }}
+														style={{
+															color: 'crimson',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -733,7 +786,7 @@ function Home() {
 											: null}
 										{mode === 'none'
 											? schedule.monday.map((day) => (
-													<p key={day._id}>
+													<p key={day._id} style={{ padding: '5px' }}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))
@@ -759,7 +812,11 @@ function Home() {
 															setday('tuesday');
 															toggletimeedit();
 														}}
-														style={{ color: 'green', cursor: 'pointer' }}
+														style={{
+															color: 'green',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -781,7 +838,7 @@ function Home() {
 											: null}
 										{mode === 'none'
 											? schedule.tuesday.map((day) => (
-													<p key={day._id}>
+													<p key={day._id} style={{ padding: '5px' }}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))
@@ -807,7 +864,11 @@ function Home() {
 															setday('wednesday');
 															toggletimeedit();
 														}}
-														style={{ color: 'green', cursor: 'pointer' }}
+														style={{
+															color: 'green',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -821,7 +882,11 @@ function Home() {
 															setday('wednesday');
 															settimeid(day._id);
 														}}
-														style={{ color: 'crimson', cursor: 'pointer' }}
+														style={{
+															color: 'crimson',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -829,7 +894,7 @@ function Home() {
 											: null}
 										{mode === 'none'
 											? schedule.wednesday.map((day) => (
-													<p key={day._id}>
+													<p key={day._id} style={{ padding: '5px' }}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))
@@ -855,7 +920,11 @@ function Home() {
 															setday('thursday');
 															toggletimeedit();
 														}}
-														style={{ color: 'green', cursor: 'pointer' }}
+														style={{
+															color: 'green',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -869,7 +938,11 @@ function Home() {
 															setday('thursday');
 															settimeid(day._id);
 														}}
-														style={{ color: 'crimson', cursor: 'pointer' }}
+														style={{
+															color: 'crimson',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -877,7 +950,7 @@ function Home() {
 											: null}
 										{mode === 'none'
 											? schedule.thursday.map((day) => (
-													<p key={day._id}>
+													<p key={day._id} style={{ padding: '5px' }}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))
@@ -903,7 +976,11 @@ function Home() {
 															setday('friday');
 															toggletimeedit();
 														}}
-														style={{ color: 'green', cursor: 'pointer' }}
+														style={{
+															color: 'green',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -917,7 +994,11 @@ function Home() {
 															setday('friday');
 															settimeid(day._id);
 														}}
-														style={{ color: 'crimson', cursor: 'pointer' }}
+														style={{
+															color: 'crimson',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -925,7 +1006,7 @@ function Home() {
 											: null}
 										{mode === 'none'
 											? schedule.friday.map((day) => (
-													<p key={day._id}>
+													<p key={day._id} style={{ padding: '5px' }}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))
@@ -951,7 +1032,11 @@ function Home() {
 															setday('saturday');
 															toggletimeedit();
 														}}
-														style={{ color: 'green', cursor: 'pointer' }}
+														style={{
+															color: 'green',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -965,7 +1050,11 @@ function Home() {
 															setday('saturday');
 															settimeid(day._id);
 														}}
-														style={{ color: 'crimson', cursor: 'pointer' }}
+														style={{
+															color: 'crimson',
+															cursor: 'pointer',
+															padding: '5px',
+														}}
 													>
 														{day.name} : {day.start} - {day.end}
 													</p>
@@ -973,7 +1062,7 @@ function Home() {
 											: null}
 										{mode === 'none'
 											? schedule.saturday.map((day) => (
-													<p key={day._id}>
+													<p key={day._id} style={{ padding: '5px' }}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))
@@ -982,14 +1071,16 @@ function Home() {
 								</div>
 							</div>
 						</div>
-						<Button
-							color="secondary"
-							size="md"
-							onClick={logout}
-							style={{ position: 'absolute', right: '20px', top: '5px' }}
-						>
-							Logout
-						</Button>
+						<div style={{ position: 'absolute', right: '20px', top: '5px' }}>
+							<Button onClick={toggleschedulemode}>
+								{schedulemode == 'all'
+									? 'switch to user schedule'
+									: 'switch to all'}
+							</Button>
+							<Button color="secondary" size="md" onClick={logout}>
+								Logout
+							</Button>
+						</div>
 					</div>
 				</div>
 			</div>
