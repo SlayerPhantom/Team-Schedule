@@ -530,13 +530,13 @@ function Home() {
 														value={day}
 														onChange={(e) => setday(e.target.value)}
 													>
-														<option>Sunday</option>
-														<option>Monday</option>
-														<option>Tuesday</option>
-														<option>Wednesday</option>
-														<option>Thursday</option>
-														<option>Friday</option>
-														<option>Sunday</option>
+														<option>sunday</option>
+														<option>monday</option>
+														<option>tuesday</option>
+														<option>wednesday</option>
+														<option>thursday</option>
+														<option>friday</option>
+														<option>saturday</option>
 													</Input>
 												</FormGroup>
 												<FormGroup>
