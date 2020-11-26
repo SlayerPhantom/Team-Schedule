@@ -601,7 +601,7 @@ function Home() {
 													<p
 														key={day.id}
 														onClick={() => {
-															settimeid(day.id);
+															settimeid(day._id);
 															setday('sunday');
 															toggletimeedit();
 														}}
@@ -614,11 +614,10 @@ function Home() {
 										{mode === 'delete'
 											? schedule.sunday.map((day) => (
 													<p
-														key={day.id}
+														key={day._id}
 														onClick={() => {
 															setday('saturday');
 															settimeid(day.id);
-															removetime(day.id);
 														}}
 														style={{ color: 'crimson', cursor: 'pointer' }}
 													>
@@ -628,7 +627,7 @@ function Home() {
 											: null}
 										{mode === 'none'
 											? schedule.sunday.map((day) => (
-													<p key={day.id}>
+													<p key={day._id}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))
@@ -648,9 +647,9 @@ function Home() {
 										{mode === 'edit'
 											? schedule.monday.map((day) => (
 													<p
-														key={day.id}
+														key={day._id}
 														onClick={() => {
-															settimeid(day.id);
+															settimeid(day._id);
 															setday('monday');
 															toggletimeedit();
 														}}
@@ -663,11 +662,10 @@ function Home() {
 										{mode === 'delete'
 											? schedule.monday.map((day) => (
 													<p
-														key={day.id}
+														key={day._id}
 														onClick={() => {
 															setday('monday');
-															settimeid(day.id);
-															removetime(day.id);
+															settimeid(day._id);
 														}}
 														style={{ color: 'crimson', cursor: 'pointer' }}
 													>
@@ -677,7 +675,7 @@ function Home() {
 											: null}
 										{mode === 'none'
 											? schedule.monday.map((day) => (
-													<p key={day.id}>
+													<p key={day._id}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))
@@ -697,9 +695,9 @@ function Home() {
 										{mode === 'edit'
 											? schedule.tuesday.map((day) => (
 													<p
-														key={day.id}
+														key={day._id}
 														onClick={() => {
-															settimeid(day.id);
+															settimeid(day._id);
 															setday('tuesday');
 															toggletimeedit();
 														}}
@@ -712,11 +710,10 @@ function Home() {
 										{mode === 'delete'
 											? schedule.tuesday.map((day) => (
 													<p
-														key={day.id}
+														key={day._id}
 														onClick={() => {
 															setday('tuesday');
-															settimeid(day.id);
-															removetime();
+															settimeid(day._id);
 														}}
 														style={{ color: 'crimson', cursor: 'pointer' }}
 													>
@@ -726,7 +723,7 @@ function Home() {
 											: null}
 										{mode === 'none'
 											? schedule.tuesday.map((day) => (
-													<p key={day.id}>
+													<p key={day._id}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))
@@ -746,9 +743,9 @@ function Home() {
 										{mode === 'edit'
 											? schedule.wednesday.map((day) => (
 													<p
-														key={day.id}
+														key={day._id}
 														onClick={() => {
-															settimeid(day.id);
+															settimeid(day._id);
 															setday('wednesday');
 															toggletimeedit();
 														}}
@@ -764,8 +761,7 @@ function Home() {
 														key={day.id}
 														onClick={() => {
 															setday('wednesday');
-															settimeid(day.id);
-															removetime();
+															settimeid(day._id);
 														}}
 														style={{ color: 'crimson', cursor: 'pointer' }}
 													>
@@ -775,7 +771,7 @@ function Home() {
 											: null}
 										{mode === 'none'
 											? schedule.wednesday.map((day) => (
-													<p key={day.id}>
+													<p key={day._id}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))
@@ -795,9 +791,9 @@ function Home() {
 										{mode === 'edit'
 											? schedule.thursday.map((day) => (
 													<p
-														key={day.id}
+														key={day._id}
 														onClick={() => {
-															settimeid(day.id);
+															settimeid(day._id);
 															setday('thursday');
 															toggletimeedit();
 														}}
@@ -810,11 +806,10 @@ function Home() {
 										{mode === 'delete'
 											? schedule.thursday.map((day) => (
 													<p
-														key={day.id}
+														key={day._id}
 														onClick={() => {
 															setday('thursday');
-															settimeid(day.id);
-															removetime();
+															settimeid(day._id);
 														}}
 														style={{ color: 'crimson', cursor: 'pointer' }}
 													>
@@ -824,7 +819,7 @@ function Home() {
 											: null}
 										{mode === 'none'
 											? schedule.thursday.map((day) => (
-													<p key={day.id}>
+													<p key={day._id}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))
@@ -844,9 +839,9 @@ function Home() {
 										{mode === 'edit'
 											? schedule.friday.map((day) => (
 													<p
-														key={day.id}
+														key={day._id}
 														onClick={() => {
-															settimeid(day.id);
+															settimeid(day._id);
 															setday('friday');
 															toggletimeedit();
 														}}
@@ -859,11 +854,10 @@ function Home() {
 										{mode === 'delete'
 											? schedule.friday.map((day) => (
 													<p
-														key={day.id}
+														key={day._id}
 														onClick={() => {
 															setday('friday');
-															settimeid(day.id);
-															removetime();
+															settimeid(day._id);
 														}}
 														style={{ color: 'crimson', cursor: 'pointer' }}
 													>
@@ -873,7 +867,7 @@ function Home() {
 											: null}
 										{mode === 'none'
 											? schedule.friday.map((day) => (
-													<p key={day.id}>
+													<p key={day._id}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))
@@ -893,9 +887,9 @@ function Home() {
 										{mode === 'edit'
 											? schedule.saturday.map((day) => (
 													<p
-														key={day.id}
+														key={day._id}
 														onClick={() => {
-															settimeid(day.id);
+															settimeid(day._id);
 															setday('saturday');
 															toggletimeedit();
 														}}
@@ -908,11 +902,10 @@ function Home() {
 										{mode === 'delete'
 											? schedule.saturday.map((day) => (
 													<p
-														key={day.id}
+														key={day._id}
 														onClick={() => {
 															setday('saturday');
-															settimeid(day.id);
-															removetime();
+															settimeid(day._id);
 														}}
 														style={{ color: 'crimson', cursor: 'pointer' }}
 													>
@@ -922,7 +915,7 @@ function Home() {
 											: null}
 										{mode === 'none'
 											? schedule.saturday.map((day) => (
-													<p key={day.id}>
+													<p key={day._id}>
 														{day.name} : {day.start} - {day.end}
 													</p>
 											  ))
