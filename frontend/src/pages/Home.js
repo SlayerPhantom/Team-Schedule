@@ -519,7 +519,13 @@ function Home() {
 											</Button>
 										</ModalFooter>
 									</Modal>
-									<Button color="success" onClick={() => setmode('edit')}>
+									<Button
+										color="success"
+										onClick={() => {
+											settimeid('none');
+											setmode('edit');
+										}}
+									>
 										Edit
 									</Button>
 									<Modal isOpen={edittimemodal} toggle={toggletimeedit}>
@@ -592,11 +598,20 @@ function Home() {
 											</Button>
 										</ModalFooter>
 									</Modal>
-									<Button color="danger" onClick={() => setmode('delete')}>
+									<Button
+										color="danger"
+										onClick={() => {
+											settimeid('');
+											setmode('delete');
+										}}
+									>
 										delete
 									</Button>
 									{mode !== 'none' ? (
-										<Button color="secondary" onClick={() => setmode('none')}>
+										<Button color="secondary" onClick={() => {
+											settimeid('')
+											setmode('none'
+										}}>
 											cancel
 										</Button>
 									) : null}

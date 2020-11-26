@@ -496,7 +496,13 @@ function Group(props) {
 											</Button>
 										</ModalFooter>
 									</Modal>
-									<Button color="success" onClick={() => setmode('edit')}>
+									<Button
+										color="success"
+										onClick={() => {
+											settimeid('');
+											setmode('edit');
+										}}
+									>
 										Edit
 									</Button>
 									<Modal isOpen={edittimemodal} toggle={toggletimeedit}>
@@ -569,11 +575,23 @@ function Group(props) {
 											</Button>
 										</ModalFooter>
 									</Modal>
-									<Button color="danger" onClick={() => setmode('delete')}>
+									<Button
+										color="danger"
+										onClick={() => {
+											settimeid('none');
+											setmode('delete');
+										}}
+									>
 										delete
 									</Button>
 									{mode !== 'none' ? (
-										<Button color="secondary" onClick={() => setmode('none')}>
+										<Button
+											color="secondary"
+											onClick={() => {
+												settimeid('');
+												setmode('none');
+											}}
+										>
 											cancel
 										</Button>
 									) : null}
