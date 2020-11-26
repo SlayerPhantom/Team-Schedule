@@ -6,7 +6,7 @@ const userSchema = new Schema({
 	email: String,
 	firstName: String,
 	lastName: String,
-	groups: [{ id: String, name: String }],
+	groups: [{ id: String, name: String, creator: String }],
 	isVerified: Boolean,
 	scheduleid: String,
 });

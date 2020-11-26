@@ -308,7 +308,7 @@ router.post('/edituserschedule', async (req, res) => {
 });
 
 // deleting a time in a schedule
-router.delete('/removetimeuser', auth, async (req, res) => {
+router.post('/removetimeuser', auth, async (req, res) => {
 	try {
 		const { day, timeid } = req.body;
 		const user = await User.findById(req.user.id);
@@ -362,7 +362,7 @@ router.delete('/removetimeuser', auth, async (req, res) => {
 		return res.json({ errors: error });
 	}
 });
-router.delete('/removetimegroup', auth, async (req, res) => {
+router.post('/removetimegroup', auth, async (req, res) => {
 	try {
 		const { day, timeid, id } = req.body;
 		const schedule = await Schedule.findById(id);

@@ -118,7 +118,7 @@ function Home() {
 		try {
 			const url = buildURL('api/group/removegroup');
 			const payload = { id };
-			const res = await axios.delete(url, payload);
+			const res = await axios.post(url, payload);
 			if (res.data.errors) {
 				const { errors } = res.data;
 				console.log(errors);
@@ -143,10 +143,10 @@ function Home() {
 				end: endtime,
 				day,
 				timeid,
-				timename,
+				name: timename,
 				id: scheduleid,
 			};
-			const res = await axios.post('api/schedule/edituserschedule', payload, {
+			const res = await axios.post(url, payload, {
 				headers,
 			});
 			if (res.data.errors) {
@@ -347,7 +347,7 @@ function Home() {
 							>
 								{group.name}
 							</h5>
-							{username === group.creator ? (
+							{username == group.creator ? (
 								<Button
 									color="danger"
 									size="sm"
@@ -402,8 +402,8 @@ function Home() {
 												try {
 													const url = buildURL('api/schedule/removetimeuser');
 													const payload = { day, timeid };
-													const headers = { token };
-													const res = await axios.delete(url, payload, {
+													const headers = { Authorization: token };
+													const res = await axios.post(url, payload, {
 														headers,
 													});
 													if (res.data.errors) {
@@ -599,7 +599,7 @@ function Home() {
 										{mode === 'edit'
 											? schedule.sunday.map((day) => (
 													<p
-														key={day.id}
+														key={day._id}
 														onClick={() => {
 															settimeid(day._id);
 															setday('sunday');
@@ -616,8 +616,8 @@ function Home() {
 													<p
 														key={day._id}
 														onClick={() => {
-															setday('saturday');
-															settimeid(day.id);
+															setday('sunday');
+															settimeid(day._id);
 														}}
 														style={{ color: 'crimson', cursor: 'pointer' }}
 													>

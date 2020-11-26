@@ -34,7 +34,7 @@ router.post('/creategroup', auth, async (req, res) => {
 		});
 		await newgroup.save();
 		const user = await User.findById(req.user.id);
-		user.groups.push({ id: newgroup._id, name });
+		user.groups.push({ id: newgroup._id, name, creator: req.user.username });
 		await user.save();
 		return res.json({
 			id: newgroup._id,
@@ -64,7 +64,7 @@ router.post('/adduser', async (req, res) => {
 	}
 });
 
-router.delete('/removeuser', async (req, res) => {
+router.post('/removeuser', async (req, res) => {
 	try {
 		const { id, userid } = req.body;
 		const user = await User.findById(userid);
@@ -80,7 +80,7 @@ router.delete('/removeuser', async (req, res) => {
 	}
 });
 
-router.delete('/removegroup', async (req, res) => {
+router.post('/removegroup', async (req, res) => {
 	try {
 		const { id } = req.body.id;
 		const group = await Group.findById(id);
