@@ -315,39 +315,39 @@ router.delete('/removetimeuser', auth, async (req, res) => {
 		const schedule = await Schedule.findById(user.scheduleid);
 		switch (day) {
 			case 'monday':
-				schedule.monday = schedule.monday.filter((time) => time._id !== timeid);
+				schedule.monday = schedule.monday.filter((time) => time._id != timeid);
 				await schedule.save();
 				break;
 			case 'tuesday':
 				schedule.tuesday = schedule.tuesday.filter(
-					(time) => time._id !== timeid
+					(time) => time._id != timeid
 				);
 				await schedule.save();
 				break;
 			case 'wednesday':
 				schedule.wednesday = schedule.wednesday.filter(
-					(time) => time._id !== timeid
+					(time) => time._id != timeid
 				);
 				await schedule.save();
 				break;
 			case 'thursday':
 				schedule.thursday = schedule.thursday.filter(
-					(time) => time._id !== timeid
+					(time) => time._id != timeid
 				);
 				await schedule.save();
 				break;
 			case 'friday':
-				schedule.friday = schedule.friday.filter((time) => time._id !== timeid);
+				schedule.friday = schedule.friday.filter((time) => time._id != timeid);
 				await schedule.save();
 				break;
 			case 'saturday':
 				schedule.saturday = schedule.saturday.filter(
-					(time) => time._id !== timeid
+					(time) => time._id != timeid
 				);
 				await schedule.save();
 				break;
 			case 'sunday':
-				schedule.sunday = schedule.sunday.filter((time) => time._id !== timeid);
+				schedule.sunday = schedule.sunday.filter((time) => time._id != timeid);
 				await schedule.save();
 				break;
 			default:
@@ -361,59 +361,50 @@ router.delete('/removetimeuser', auth, async (req, res) => {
 		return res.json({ errors: error });
 	}
 });
-
-router.delete('/removetimegroup', auth, async (req, res) => {
+router.delete('/removetimegroup', async (req, res) => {
 	try {
-		const { day, start, end, id } = req.body;
-		const group = await Group.findById(id);
-		const schedule = await Schedule.findById(group.scheduleid);
+		const { day, timeid, id } = req.body;
+		const schedule = await Schedule.findById(id);
 		switch (day) {
 			case 'monday':
-				schedule.monday = schedule.monday.filter((time) => {
-					if (time.start === start && time.end === time.end) return false;
-					return true;
-				});
+				schedule.monday = schedule.monday.filter((time) => time._id != timeid);
+				await schedule.save();
 				break;
 			case 'tuesday':
-				schedule.tuesday = schedule.tuesday.filter((time) => {
-					if (time.start === start && time.end === time.end) return false;
-					return true;
-				});
+				schedule.tuesday = schedule.tuesday.filter(
+					(time) => time._id != timeid
+				);
+				await schedule.save();
 				break;
 			case 'wednesday':
-				schedule.wednesday = schedule.wednesday.filter((time) => {
-					if (time.start === start && time.end === time.end) return false;
-					return true;
-				});
+				schedule.wednesday = schedule.wednesday.filter(
+					(time) => time._id != timeid
+				);
+				await schedule.save();
 				break;
 			case 'thursday':
-				schedule.thursday = schedule.thursday.filter((time) => {
-					if (time.start === start && time.end === time.end) return false;
-					return true;
-				});
+				schedule.thursday = schedule.thursday.filter(
+					(time) => time._id != timeid
+				);
+				await schedule.save();
 				break;
 			case 'friday':
-				schedule.friday = schedule.friday.filter((time) => {
-					if (time.start === start && time.end === time.end) return false;
-					return true;
-				});
+				schedule.friday = schedule.friday.filter((time) => time._id != timeid);
+				await schedule.save();
 				break;
 			case 'saturday':
-				schedule.saturday = schedule.saturday.filter((time) => {
-					if (time.start === start && time.end === time.end) return false;
-					return true;
-				});
+				schedule.saturday = schedule.saturday.filter(
+					(time) => time._id != timeid
+				);
+				await schedule.save();
 				break;
 			case 'sunday':
-				schedule.sunday = schedule.sunday.filter((time) => {
-					if (time.start === start && time.end === time.end) return false;
-					return true;
-				});
+				schedule.sunday = schedule.sunday.filter((time) => time._id != timeid);
+				await schedule.save();
 				break;
 			default:
 				return res.json({ errors: 'not a valid day' });
 		}
-		await schedule.save();
 		return res.json({
 			message: `successfully removed time ${day}, start: ${start}, end: ${end}`,
 		});
