@@ -608,10 +608,13 @@ function Home() {
 										delete
 									</Button>
 									{mode !== 'none' ? (
-										<Button color="secondary" onClick={() => {
-											settimeid('')
-											setmode('none'
-										}}>
+										<Button
+											color="secondary"
+											onClick={() => {
+												settimeid('');
+												setmode('none');
+											}}
+										>
 											cancel
 										</Button>
 									) : null}
