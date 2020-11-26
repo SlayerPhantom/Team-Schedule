@@ -507,7 +507,9 @@ function Home() {
 											>
 												<Button
 													color="danger"
-													onClick={async () => removeGroup}
+													onClick={() => {
+														removeGroup();
+													}}
 												>
 													yes
 												</Button>
