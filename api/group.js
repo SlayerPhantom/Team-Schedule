@@ -50,9 +50,9 @@ router.post('/creategroup', auth, async (req, res) => {
 
 router.post('/adduser', async (req, res) => {
 	try {
-		const { id, name, userid } = req.body;
+		const { id, groupname, userid } = req.body;
 		const adduser = await User.findById(userid);
-		adduser.groups.push({ id, name });
+		adduser.groups.push({ id, name: groupname });
 		await adduser.save();
 		const group = await Group.findById(id);
 		group.members.push({ id: userid, username: adduser.username });

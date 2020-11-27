@@ -159,7 +159,7 @@ function Group(props) {
 	async function adduser(name, userid) {
 		try {
 			const url = buildURL('api/group/adduser');
-			const payload = { id: groupid, name, userid };
+			const payload = { id: groupid, groupname, userid };
 			const res = await axios.post(url, payload);
 			if (res.data.errors) {
 				const { errors } = res.data;
