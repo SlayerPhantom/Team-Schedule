@@ -32,7 +32,7 @@ function Home() {
 	const [timename, settimename] = useState('');
 	const [starttime, setstarttime] = useState('');
 	const [endtime, setendtime] = useState('');
-	const [day, setday] = useState('');
+	const [day, setday] = useState('sunday');
 	const [timeid, settimeid] = useState('');
 	const [scheduleid, setscheduleid] = useState(
 		localStorage.getItem('scheduleid')
