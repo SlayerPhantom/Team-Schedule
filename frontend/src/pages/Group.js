@@ -436,7 +436,10 @@ function Group(props) {
 											>
 												<Button
 													color="danger"
-													onClick={async () => removetime()}
+													onClick={async () => {
+														removetime()
+														settimeid('')
+													}}
 												>
 													yes
 												</Button>
