@@ -38,7 +38,7 @@ function Group(props) {
 	const [groupname, setgroupname] = useState(localStorage.getItem('groupname'));
 	const [username, setusername] = useState(localStorage.getItem('username'));
 	const [creator, setcreator] = useState('');
-	const [day, setday] = useState('');
+	const [day, setday] = useState('sunday');
 	const [timeid, settimeid] = useState('');
 	const [userid, setuserid] = useState('');
 	const [token, settoken] = useState(localStorage.getItem('token'));
