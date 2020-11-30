@@ -583,16 +583,16 @@ function Group(props) {
 										Edit
 									</Button>
 									<Modal isOpen={edittimemodal} toggle={toggletimeedit}>
-										<ModalHeader toggle={toggletimeedit}>Edit time</ModalHeader>
+										<ModalHeader toggle={toggletimeedit}>Edit Time</ModalHeader>
 										<ModalBody>
 											<Form>
 												<FormGroup>
-													<Label for="name">name of time</Label>
+													<Label for="name">Name of Time</Label>
 													<Input
 														type="text"
 														name="name of time"
 														id="timeName"
-														placeholder="name of time"
+														placeholder="Name of Time"
 														value={timename}
 														onChange={(e) => settimename(e.target.value)}
 													/>
