@@ -74,7 +74,7 @@ function SendPasswordReset() {
 						<Input
 							type="text"
 							name="email"
-							placeholder="email"
+							placeholder="Email"
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 						/>
@@ -92,7 +92,7 @@ function SendPasswordReset() {
 							justifyContent: 'space-between',
 						}}
 					>
-						<Link to="/">Go to login</Link>
+						<Link to="/">Go To Login</Link>
 					</div>
 				</Form>
 				<p style={{ textAlign: 'center', marginBottom: '10px' }}>{message}</p>
