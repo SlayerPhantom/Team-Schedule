@@ -297,23 +297,23 @@ function Group(props) {
 								}}
 							/>
 							<Modal isOpen={modal} toggle={toggle}>
-								<ModalHeader toggle={toggle}>Search users</ModalHeader>
+								<ModalHeader toggle={toggle}>Search Users</ModalHeader>
 								<ModalBody>
 									<Form>
 										<FormGroup>
-											<Label for="search username">Enter their username</Label>
+											<Label for="search username">Enter Username</Label>
 											<Input
 												type="text"
 												name="users"
 												id="users"
-												placeholder="search a username"
+												placeholder="Search a Username..."
 												value={searchusername}
 												onChange={(e) => setsearchusername(e.target.value)}
 											/>
 										</FormGroup>
 									</Form>
 									{searchedusers.length !== 0 ? (
-										<p>Click on a user to add</p>
+										<p>Click on a user to add to group</p>
 									) : null}
 									{searchedusers.map((user) => (
 										<div key={user._id} style={{ display: 'flex' }}>
@@ -323,7 +323,7 @@ function Group(props) {
 													setsearchedusers([]);
 													toggle();
 												}}
-												style={{ cursor: 'pointer', color: 'limegreen' }}
+												style={{ cursor: 'pointer', color: 'limegreen', textTransform: 'capitalize' }}
 											>
 												{user.username}
 											</p>
@@ -337,7 +337,7 @@ function Group(props) {
 											searchusers(searchusername);
 										}}
 									>
-										search
+										Search
 									</Button>{' '}
 									<Button
 										color="secondary"
@@ -441,10 +441,10 @@ function Group(props) {
 														settimeid('')
 													}}
 												>
-													yes
+													Yes
 												</Button>
 												<Button color="secondary" onClick={() => settimeid('')}>
-													cancel
+													Cancel
 												</Button>
 											</div>
 										</Alert>
@@ -471,16 +471,16 @@ function Group(props) {
 										}}
 									>
 										<Alert color="danger">
-											Are you sure you want to delete this user?
+											Are you sure you want to remove this user from the group?
 											<br />
 											<div
 												style={{ display: 'flex', justifyContent: 'center' }}
 											>
 												<Button color="danger" onClick={() => removeuser()}>
-													yes
+													Yes
 												</Button>
 												<Button color="secondary" onClick={() => setuserid('')}>
-													cancel
+													Cancel
 												</Button>
 											</div>
 										</Alert>
@@ -504,23 +504,23 @@ function Group(props) {
 										Add
 									</Button>
 									<Modal isOpen={timemodal} toggle={toggletime}>
-										<ModalHeader toggle={toggletime}>Add time</ModalHeader>
+										<ModalHeader toggle={toggletime}>Add Time</ModalHeader>
 										<ModalBody>
 											<Form>
 												<FormGroup>
-													<Label for="name">name of time</Label>
+													<Label for="name">Name of Time</Label>
 													<Input
 														type="text"
 														name="name of time"
 														id="timeName"
-														placeholder="name of time"
+														placeholder="Name of Time"
 														value={timename}
 														onChange={(e) => settimename(e.target.value)}
 													/>
 												</FormGroup>
 
 												<FormGroup>
-													<Label for="day of week">Select day of week</Label>
+													<Label for="day of week">Select Day of Week</Label>
 													<Input
 														type="select"
 														name="select"
@@ -538,23 +538,23 @@ function Group(props) {
 													</Input>
 												</FormGroup>
 												<FormGroup>
-													<Label for="start time">start time</Label>
+													<Label for="start time">Start Time</Label>
 													<Input
 														type="time"
 														name="start time"
 														id="startTime"
-														placeholder="start time placeholder"
+														placeholder="Start Time"
 														onChange={(e) => setstarttime(e.target.value)}
 													/>
 												</FormGroup>
 												<FormGroup>
-													<Label for="exampleTime">end time</Label>
+													<Label for="exampleTime">End Time</Label>
 													<Input
 														type="time"
 														name="end time"
 														id="endTime"
 														onChange={(e) => setendtime(e.target.value)}
-														placeholder="end time placeholder"
+														placeholder="End Time"
 													/>
 												</FormGroup>
 											</Form>
@@ -599,23 +599,23 @@ function Group(props) {
 												</FormGroup>
 
 												<FormGroup>
-													<Label for="start time">new start time</Label>
+													<Label for="start time">New Start Time</Label>
 													<Input
 														type="time"
 														name="start time"
 														id="startTime"
-														placeholder="start time placeholder"
+														placeholder="New Start time"
 														onChange={(e) => setstarttime(e.target.value)}
 													/>
 												</FormGroup>
 												<FormGroup>
-													<Label for="exampleTime">new end time</Label>
+													<Label for="exampleTime">New End Time</Label>
 													<Input
 														type="time"
 														name="end time"
 														id="endTime"
 														onChange={(e) => setendtime(e.target.value)}
-														placeholder="end time placeholder"
+														placeholder="New End Time"
 													/>
 												</FormGroup>
 											</Form>
@@ -627,7 +627,7 @@ function Group(props) {
 													edittime();
 												}}
 											>
-												edit
+												Edit
 											</Button>{' '}
 											<Button color="secondary" onClick={toggletimeedit}>
 												Cancel
@@ -641,7 +641,7 @@ function Group(props) {
 											setmode('delete');
 										}}
 									>
-										delete
+										Delete
 									</Button>
 									{mode !== 'none' ? (
 										<Button
@@ -651,7 +651,7 @@ function Group(props) {
 												setmode('none');
 											}}
 										>
-											cancel
+											Cancel
 										</Button>
 									) : null}
 								</div>
