@@ -78,7 +78,7 @@ function Forgot(props) {
 						<Input
 							type="password"
 							name="password"
-							placeholder="password"
+							placeholder="Password"
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 						/>
@@ -88,7 +88,7 @@ function Forgot(props) {
 						<Input
 							type="password"
 							name="confirm password"
-							placeholder="confirm password"
+							placeholder="Confirm Password"
 							value={confirmPassword}
 							onChange={(e) => setConfirmPassword(e.target.value)}
 						/>
@@ -105,7 +105,7 @@ function Forgot(props) {
 							justifyContent: 'space-between',
 						}}
 					>
-						<Link to="/">Go to login</Link>
+						<Link to="/">Go To Login</Link>
 					</div>
 				</Form>
 				<p style={{ textAlign: 'center', marginBottom: '10px' }}>{message}</p>
