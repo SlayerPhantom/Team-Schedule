@@ -412,10 +412,10 @@ function Group(props) {
 							>
 								<div style={{ display: 'flex' }}>
 									<Link to="/home" style={{ position: 'absolute', left: '0' }}>
-										Back to home
+										Back to Home
 									</Link>
-									<h1 style={{ textAlign: 'center' }}>
-										{`${groupname}'s `} Schedule
+									<h1 style={{ textAlign: 'center', textTransform: 'capitalize' }}>
+										{`${groupname}`} Schedule
 									</h1>
 								</div>
 								{timeid !== '' && mode === 'delete' && (
