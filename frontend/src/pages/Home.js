@@ -338,12 +338,12 @@ function Home() {
 								<ModalBody>
 									<Form>
 										<FormGroup>
-											<Label for="group name">group name</Label>
+											<Label for="group name">Group name</Label>
 											<Input
 												type="text"
 												name="name"
 												id="groupname"
-												placeholder="group name"
+												placeholder="Enter New Group Name"
 												value={groupname}
 												onChange={(e) => setgroupname(e.target.value)}
 											/>
@@ -431,8 +431,8 @@ function Home() {
 									borderBottom: '2px solid black',
 								}}
 							>
-								<h1 style={{ textAlign: 'center' }}>
-									{`${username}'s `} Schedule
+								<h1 style={{ textAlign: 'center', textTransform: 'capitalize' }}>
+									{`${username}`} Schedule
 								</h1>
 								{timeid && mode === 'delete' && (
 									<div
@@ -612,39 +612,39 @@ function Home() {
 										</Button>
 									)}
 									<Modal isOpen={edittimemodal} toggle={toggletimeedit}>
-										<ModalHeader toggle={toggletimeedit}>Edit time</ModalHeader>
+										<ModalHeader toggle={toggletimeedit}>Edit Time</ModalHeader>
 										<ModalBody>
 											<Form>
 												<FormGroup>
-													<Label for="name">name of time</Label>
+													<Label for="name">Name Of Time</Label>
 													<Input
 														type="text"
 														name="name of time"
 														id="timeName"
-														placeholder="name of time"
+														placeholder="Name Of Time"
 														value={timename}
 														onChange={(e) => settimename(e.target.value)}
 													/>
 												</FormGroup>
 
 												<FormGroup>
-													<Label for="start time">new start time</Label>
+													<Label for="start time">New Start Time</Label>
 													<Input
 														type="time"
 														name="start time"
 														id="startTime"
-														placeholder="start time placeholder"
+														placeholder="Start Time"
 														onChange={(e) => setstarttime(e.target.value)}
 													/>
 												</FormGroup>
 												<FormGroup>
-													<Label for="exampleTime">new end time</Label>
+													<Label for="exampleTime">New End Time</Label>
 													<Input
 														type="time"
 														name="end time"
 														id="endTime"
 														onChange={(e) => setendtime(e.target.value)}
-														placeholder="end time placeholder"
+														placeholder="End Time"
 													/>
 												</FormGroup>
 											</Form>
@@ -656,7 +656,7 @@ function Home() {
 													edittime();
 												}}
 											>
-												edit
+												Edit
 											</Button>{' '}
 											<Button color="secondary" onClick={toggletimeedit}>
 												Cancel
@@ -671,7 +671,7 @@ function Home() {
 												setmode('delete');
 											}}
 										>
-											delete
+											Delete
 										</Button>
 									)}
 									{mode !== 'none' ? (
@@ -1204,8 +1204,8 @@ function Home() {
 						<div style={{ position: 'absolute', right: '20px', top: '5px' }}>
 							<Button color="info" onClick={toggleschedulemode}>
 								{schedulemode == 'all'
-									? 'switch to user schedule'
-									: 'switch to all'}
+									? 'Show Personal Schedule'
+									: 'Integrate Personal Schedule With Groups'}
 							</Button>
 							<Button color="secondary" size="md" onClick={logout}>
 								Logout
