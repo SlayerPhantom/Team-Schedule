@@ -82,7 +82,7 @@ function Login() {
 						<Input
 							type="text"
 							name="username"
-							placeholder="username"
+							placeholder="Username"
 							value={username}
 							onChange={(e) => setUsername(e.target.value)}
 						/>
@@ -92,7 +92,7 @@ function Login() {
 						<Input
 							type="password"
 							name="password"
-							placeholder="password"
+							placeholder="Password"
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 						/>
@@ -109,7 +109,7 @@ function Login() {
 							justifyContent: 'space-between',
 						}}
 					>
-						<Link to="/register">Don't have an account?</Link>
+						<Link to="/register">Don't have an account? Register Here!</Link>
 						<Link to="/forgotpassword">Forgot password?</Link>
 					</div>
 				</Form>
