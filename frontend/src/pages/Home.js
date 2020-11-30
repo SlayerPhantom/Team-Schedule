@@ -478,10 +478,10 @@ function Home() {
 														}
 													}}
 												>
-													yes
+													Yes
 												</Button>
 												<Button color="secondary" onClick={() => settimeid('')}>
-													cancel
+													Cancel
 												</Button>
 											</div>
 										</Alert>
@@ -535,19 +535,19 @@ function Home() {
 										<ModalBody>
 											<Form>
 												<FormGroup>
-													<Label for="name">name of time</Label>
+													<Label for="name">Name of Time</Label>
 													<Input
 														type="text"
 														name="name of time"
 														id="timeName"
-														placeholder="name of time"
+														placeholder="Name of Time"
 														value={timename}
 														onChange={(e) => settimename(e.target.value)}
 													/>
 												</FormGroup>
 
 												<FormGroup>
-													<Label for="day of week">Select day of week</Label>
+													<Label for="day of week">Select Day of Week</Label>
 													<Input
 														type="select"
 														name="select"
@@ -565,23 +565,23 @@ function Home() {
 													</Input>
 												</FormGroup>
 												<FormGroup>
-													<Label for="start time">start time</Label>
+													<Label for="start time">Start Time</Label>
 													<Input
 														type="time"
 														name="start time"
 														id="startTime"
-														placeholder="start time placeholder"
+														placeholder="Start Time"
 														onChange={(e) => setstarttime(e.target.value)}
 													/>
 												</FormGroup>
 												<FormGroup>
-													<Label for="exampleTime">end time</Label>
+													<Label for="exampleTime">End time</Label>
 													<Input
 														type="time"
 														name="end time"
 														id="endTime"
 														onChange={(e) => setendtime(e.target.value)}
-														placeholder="end time placeholder"
+														placeholder="End Time"
 													/>
 												</FormGroup>
 											</Form>
@@ -616,7 +616,7 @@ function Home() {
 										<ModalBody>
 											<Form>
 												<FormGroup>
-													<Label for="name">Name Of Time</Label>
+													<Label for="name">Name of Time</Label>
 													<Input
 														type="text"
 														name="name of time"
@@ -1205,7 +1205,7 @@ function Home() {
 							<Button color="info" onClick={toggleschedulemode}>
 								{schedulemode == 'all'
 									? 'Show Personal Schedule'
-									: 'Integrate Personal Schedule With Groups'}
+									: 'Integrate Schedule With Groups'}
 							</Button>
 							<Button color="secondary" size="md" onClick={logout}>
 								Logout
