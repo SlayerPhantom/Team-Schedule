@@ -90,7 +90,7 @@ function Register() {
 						<Input
 							type="text"
 							name="username"
-							placeholder="username"
+							placeholder="Username"
 							value={username}
 							onChange={(e) => setUsername(e.target.value)}
 						/>
@@ -100,7 +100,7 @@ function Register() {
 						<Input
 							type="text"
 							name="email"
-							placeholder="email"
+							placeholder="Email"
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 						/>
@@ -138,7 +138,7 @@ function Register() {
 								<Input
 									type="text"
 									name="fname"
-									placeholder="First name"
+									placeholder="First Name"
 									value={fname}
 									onChange={(e) => setFname(e.target.value)}
 								/>
@@ -150,7 +150,7 @@ function Register() {
 								<Input
 									type="text"
 									name="lname"
-									placeholder="Last name"
+									placeholder="Last Name"
 									value={lname}
 									onChange={(e) => setLname(e.target.value)}
 								/>
@@ -170,7 +170,7 @@ function Register() {
 							justifyContent: 'space-between',
 						}}
 					>
-						<Link to={'/'}>Already have an account?</Link>
+						<Link to={'/'}>Already have an account? Sign in</Link>
 					</div>
 					<p style={{ textAlign: 'center', marginBottom: '10px' }}>{message}</p>
 				</Form>
