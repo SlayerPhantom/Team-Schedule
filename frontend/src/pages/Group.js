@@ -368,7 +368,7 @@ function Group(props) {
 							>
 								{member.username}
 							</h5>
-							{(username == creator && member.username != creator) || (member.username === 'username' && creator != member.username) ? (
+							{(username == creator && member.username != creator) || (member.username === username && creator != member.username) ? (
 								<FaMinus
 									color="white"
 									size="2em"
